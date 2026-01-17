@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DropDeck Brand Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dd-navy: #1E293B;
+      --dd-cyan: #06B6D4;
+      --dd-slate-50: #F8FAFC;
+      --dd-slate-100: #F1F5F9;
+      --dd-slate-200: #E2E8F0;
+      --dd-slate-700: #334155;
+      --dd-slate-800: #1E293B;
+      --dd-slate-900: #0F172A;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--dd-slate-100);
+      color: var(--dd-slate-800);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--dd-navy);
+      margin-bottom: 8px;
+    }
+    
+    header h1 span {
+      color: var(--dd-cyan);
+    }
+    
+    header .tagline {
+      font-size: 20px;
+      color: var(--dd-slate-700);
+      font-weight: 400;
+    }
+    
+    .section {
+      margin-bottom: 60px;
+    }
+    
+    .section h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--dd-navy);
+    }
+    
+    .section p {
+      color: var(--dd-slate-700);
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+    
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .logo-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .logo-card.dark {
+      background: var(--dd-slate-900);
+    }
+    
+    .logo-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--dd-slate-700);
+    }
+    
+    .logo-card.dark h3 {
+      color: var(--dd-slate-200);
+    }
+    
+    .logo-card svg {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+    }
+    
+    .logo-card .icon-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .logo-card .icon-row svg {
+      width: auto;
+      height: 64px;
+    }
+    
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    
+    .color-swatch {
+      text-align: center;
+    }
+    
+    .color-swatch .swatch {
+      width: 100%;
+      height: 80px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .color-swatch .name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--dd-navy);
+    }
+    
+    .color-swatch .hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--dd-slate-700);
+    }
+    
+    .platform-colors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    
+    .platform-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .typography-demo {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .type-sample {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--dd-slate-200);
+    }
+    
+    .type-sample:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .type-sample .label {
+      font-size: 12px;
+      color: var(--dd-slate-700);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .type-sample .h1-demo {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    
+    .type-sample .h2-demo {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    
+    .type-sample .h3-demo {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .type-sample .body-demo {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    
+    .type-sample .caption-demo {
+      font-size: 12px;
+      color: var(--dd-slate-700);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--dd-slate-700);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Drop<span>Deck</span></h1>
+      <p class="tagline">Every drop. One deck.</p>
+    </header>
+    
+    <!-- Logo Concepts -->
+    <section class="section">
+      <h2>Logo Concepts</h2>
+      <p>Four distinct approaches to the DropDeck mark, each emphasizing different aspects of the brand metaphor.</p>
+      
+      <div class="logo-grid">
+        <div class="logo-card">
+          <h3>Concept A: Card Grid (Recommended)</h3>
+          <svg viewBox="0 0 512 512">
+            <defs>
+              <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#06B6D4"/>
+                <stop offset="100%" style="stop-color:#0891B2"/>
+              </linearGradient>
+            </defs>
+            <rect x="32" y="32" width="448" height="448" rx="64" fill="#1E293B"/>
+            <rect x="80" y="92" width="156" height="156" rx="16" fill="#334155" opacity="0.5"/>
+            <rect x="276" y="92" width="156" height="156" rx="16" fill="#334155" opacity="0.5"/>
+            <rect x="80" y="276" width="156" height="156" rx="16" fill="#334155" opacity="0.5"/>
+            <rect x="276" y="276" width="156" height="156" rx="16" fill="#334155" opacity="0.5"/>
+            <rect x="72" y="80" width="156" height="156" rx="16" fill="#475569"/>
+            <rect x="268" y="80" width="156" height="156" rx="16" fill="#475569"/>
+            <rect x="72" y="276" width="156" height="156" rx="16" fill="#475569"/>
+            <rect x="268" y="276" width="156" height="156" rx="16" fill="url(#cg1)"/>
+            <path d="M346 320 L346 380 M322 356 L346 380 L370 356" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <line x1="100" y1="120" x2="180" y2="120" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+            <line x1="100" y1="145" x2="160" y2="145" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+            <line x1="296" y1="120" x2="376" y2="120" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+            <line x1="296" y1="145" x2="356" y2="145" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+            <line x1="100" y1="316" x2="180" y2="316" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+            <line x1="100" y1="341" x2="160" y2="341" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        
+        <div class="logo-card">
+          <h3>Concept B: Stacked Cards</h3>
+          <svg viewBox="0 0 512 512">
+            <defs>
+              <linearGradient id="sc1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#06B6D4"/>
+                <stop offset="100%" style="stop-color:#0891B2"/>
+              </linearGradient>
+            </defs>
+            <rect x="32" y="32" width="448" height="448" rx="64" fill="#1E293B"/>
+            <rect x="160" y="100" width="220" height="280" rx="20" fill="#334155" transform="rotate(-12, 256, 256)"/>
+            <rect x="150" y="110" width="220" height="280" rx="20" fill="#475569" transform="rotate(-6, 256, 256)"/>
+            <rect x="142" y="116" width="220" height="280" rx="20" fill="#64748B" transform="rotate(0, 256, 256)"/>
+            <rect x="138" y="116" width="220" height="280" rx="20" fill="url(#sc1)" transform="rotate(6, 256, 256)"/>
+            <g transform="rotate(6, 256, 256)">
+              <circle cx="248" cy="220" r="40" fill="rgba(255,255,255,0.2)"/>
+              <path d="M248 195 L248 245 M228 225 L248 245 L268 225" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <line x1="175" y1="300" x2="280" y2="300" stroke="rgba(255,255,255,0.4)" stroke-width="6" stroke-linecap="round"/>
+              <line x1="175" y1="330" x2="240" y2="330" stroke="rgba(255,255,255,0.3)" stroke-width="6" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        
+        <div class="logo-card">
+          <h3>Concept C: Convergence Pin</h3>
+          <svg viewBox="0 0 512 512">
+            <defs>
+              <linearGradient id="cp1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#06B6D4"/>
+                <stop offset="100%" style="stop-color:#0891B2"/>
+              </linearGradient>
+            </defs>
+            <rect x="32" y="32" width="448" height="448" rx="64" fill="#1E293B"/>
+            <path d="M100 140 Q180 200 256 280" stroke="#475569" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <path d="M256 100 Q256 180 256 280" stroke="#64748B" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <path d="M412 140 Q332 200 256 280" stroke="#475569" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <path d="M90 280 Q160 280 256 320" stroke="#64748B" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <path d="M422 280 Q352 280 256 320" stroke="#64748B" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <circle cx="100" cy="140" r="16" fill="#EF4444"/>
+            <circle cx="256" cy="100" r="16" fill="#06C167"/>
+            <circle cx="412" cy="140" r="16" fill="#FF9900"/>
+            <circle cx="90" cy="280" r="16" fill="#43B02A"/>
+            <circle cx="422" cy="280" r="16" fill="#0071DC"/>
+            <path d="M256 260 C256 260 200 310 200 360 C200 390 224 420 256 420 C288 420 312 390 312 360 C312 310 256 260 256 260 Z" fill="url(#cp1)"/>
+            <circle cx="256" cy="355" r="20" fill="#1E293B"/>
+            <path d="M256 340 L240 352 L240 368 L252 368 L252 358 L260 358 L260 368 L272 368 L272 352 Z" fill="#06B6D4"/>
+          </svg>
+        </div>
+        
+        <div class="logo-card">
+          <h3>Simplified Icon (for small sizes)</h3>
+          <div class="icon-row">
+            <svg viewBox="0 0 64 64" width="128" height="128">
+              <rect x="4" y="4" width="56" height="56" rx="12" fill="#1E293B"/>
+              <rect x="12" y="12" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="35" y="12" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="12" y="35" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="35" y="35" width="17" height="17" rx="3" fill="#06B6D4"/>
+              <path d="M43.5 40 L43.5 48 M40 45 L43.5 48 L47 45" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <svg viewBox="0 0 64 64" width="64" height="64">
+              <rect x="4" y="4" width="56" height="56" rx="12" fill="#1E293B"/>
+              <rect x="12" y="12" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="35" y="12" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="12" y="35" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="35" y="35" width="17" height="17" rx="3" fill="#06B6D4"/>
+              <path d="M43.5 40 L43.5 48 M40 45 L43.5 48 L47 45" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <svg viewBox="0 0 64 64" width="32" height="32">
+              <rect x="4" y="4" width="56" height="56" rx="12" fill="#1E293B"/>
+              <rect x="12" y="12" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="35" y="12" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="12" y="35" width="17" height="17" rx="3" fill="#475569"/>
+              <rect x="35" y="35" width="17" height="17" rx="3" fill="#06B6D4"/>
+              <path d="M43.5 40 L43.5 48 M40 45 L43.5 48 L47 45" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Horizontal Logos -->
+    <section class="section">
+      <h2>Horizontal Wordmark</h2>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <h3>Light Background</h3>
+          <svg viewBox="0 0 400 100">
+            <defs>
+              <linearGradient id="hl1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#06B6D4"/>
+                <stop offset="100%" style="stop-color:#0891B2"/>
+              </linearGradient>
+            </defs>
+            <g transform="translate(10, 10)">
+              <rect x="0" y="0" width="80" height="80" rx="16" fill="#1E293B"/>
+              <rect x="10" y="10" width="26" height="26" rx="4" fill="#475569"/>
+              <rect x="44" y="10" width="26" height="26" rx="4" fill="#475569"/>
+              <rect x="10" y="44" width="26" height="26" rx="4" fill="#475569"/>
+              <rect x="44" y="44" width="26" height="26" rx="4" fill="url(#hl1)"/>
+              <path d="M57 51 L57 63 M52 58 L57 63 L62 58" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </g>
+            <text x="110" y="62" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#1E293B">Drop<tspan fill="#06B6D4">Deck</tspan></text>
+            <text x="112" y="82" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="400" fill="#64748B" letter-spacing="0.5">Every drop. One deck.</text>
+          </svg>
+        </div>
+        
+        <div class="logo-card dark">
+          <h3>Dark Background</h3>
+          <svg viewBox="0 0 400 100">
+            <defs>
+              <linearGradient id="hd1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#06B6D4"/>
+                <stop offset="100%" style="stop-color:#0891B2"/>
+              </linearGradient>
+            </defs>
+            <g transform="translate(10, 10)">
+              <rect x="0" y="0" width="80" height="80" rx="16" fill="#1E293B"/>
+              <rect x="10" y="10" width="26" height="26" rx="4" fill="#475569"/>
+              <rect x="44" y="10" width="26" height="26" rx="4" fill="#475569"/>
+              <rect x="10" y="44" width="26" height="26" rx="4" fill="#475569"/>
+              <rect x="44" y="44" width="26" height="26" rx="4" fill="url(#hd1)"/>
+              <path d="M57 51 L57 63 M52 58 L57 63 L62 58" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </g>
+            <text x="110" y="62" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#F8FAFC">Drop<tspan fill="#06B6D4">Deck</tspan></text>
+            <text x="112" y="82" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="400" fill="#94A3B8" letter-spacing="0.5">Every drop. One deck.</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Color Palette -->
+    <section class="section">
+      <h2>Color Palette</h2>
+      <p>Primary brand colors designed for accessibility and clarity across light and dark modes.</p>
+      
+      <div class="color-palette">
+        <div class="color-swatch">
+          <div class="swatch" style="background: #1E293B;"></div>
+          <div class="name">Deck Navy</div>
+          <div class="hex">#1E293B</div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: #06B6D4;"></div>
+          <div class="name">Drop Cyan</div>
+          <div class="hex">#06B6D4</div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: #10B981;"></div>
+          <div class="name">Signal Green</div>
+          <div class="hex">#10B981</div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: #F59E0B;"></div>
+          <div class="name">Alert Amber</div>
+          <div class="hex">#F59E0B</div>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: #EF4444;"></div>
+          <div class="name">Urgent Red</div>
+          <div class="hex">#EF4444</div>
+        </div>
+      </div>
+      
+      <h3 style="margin-top: 40px; margin-bottom: 16px; font-size: 18px;">Platform Colors</h3>
+      <div class="platform-colors">
+        <span class="platform-badge" style="background: rgba(255,48,8,0.15); color: #FF3008;">● DoorDash</span>
+        <span class="platform-badge" style="background: rgba(6,193,103,0.15); color: #06C167;">● Uber Eats</span>
+        <span class="platform-badge" style="background: rgba(67,176,42,0.15); color: #43B02A;">● Instacart</span>
+        <span class="platform-badge" style="background: rgba(255,153,0,0.15); color: #FF9900;">● Amazon</span>
+        <span class="platform-badge" style="background: rgba(0,113,220,0.15); color: #0071DC;">● Walmart</span>
+        <span class="platform-badge" style="background: rgba(0,168,89,0.15); color: #00A859;">● Shipt</span>
+        <span class="platform-badge" style="background: rgba(227,24,55,0.15); color: #E31837;">● Costco</span>
+        <span class="platform-badge" style="background: rgba(0,103,160,0.15); color: #0067A0;">● Sam's Club</span>
+        <span class="platform-badge" style="background: rgba(109,44,65,0.15); color: #6D2C41;">● Total Wine</span>
+        <span class="platform-badge" style="background: rgba(107,70,193,0.15); color: #6B46C1;">● Drizly</span>
+      </div>
+    </section>
+    
+    <!-- Typography -->
+    <section class="section">
+      <h2>Typography</h2>
+      <div class="typography-demo">
+        <div class="type-sample">
+          <div class="label">H1 - Inter Bold 32px</div>
+          <div class="h1-demo">Your deliveries, unified.</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">H2 - Inter Semibold 24px</div>
+          <div class="h2-demo">Active Deliveries</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">H3 - Inter Semibold 18px</div>
+          <div class="h3-demo">DoorDash • In Transit</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">Body - Inter Regular 16px</div>
+          <div class="body-demo">Your driver is 3 stops away. Estimated arrival in 12 minutes.</div>
+        </div>
+        <div class="type-sample">
+          <div class="label">Caption - Inter Regular 12px</div>
+          <div class="caption-demo">Last updated 2 minutes ago • Tracking ID: 1Z999AA10123456784</div>
+        </div>
+      </div>
+    </section>
+    
+    <footer>
+      <p>DropDeck Brand Identity Guide • Version 1.0</p>
+    </footer>
+  </div>
+</body>
+</html>
