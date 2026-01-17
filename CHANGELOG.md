@@ -7,6 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-01-17
+
+### Added
+
+#### Phase 3: Platform Adapters Complete
+
+**Sprint 3.1: Instacart Adapter**
+- OAuth 2.0 client with token refresh and revocation
+- API client for orders, delivery tracking, store search
+- Webhook handler for real-time delivery updates (HMAC-SHA256 verification)
+- Costco integration via Instacart fulfillment detection
+- Zod schemas for all Instacart API responses
+- Status mapping from Instacart → unified delivery status
+
+**Sprint 3.2: DoorDash Adapter**
+- JWT authentication with RS256 signing (jose library)
+- Drive API integration for delivery tracking
+- Webhook handler with signature verification
+- Real-time location tracking support
+- Support for dasher assignment and unassignment events
+- Status mapping for all DoorDash delivery states
+
+**Sprint 3.3: Uber Eats Adapter**
+- OAuth 2.0 with PKCE (Proof Key for Code Exchange)
+- Eats API integration for order and delivery data
+- Real-time tracking via webhook subscriptions
+- `exchangeCodeWithPKCE()` method for secure token exchange
+- Support for courier location updates and ETA changes
+
+**Sprint 3.4: Amazon Adapter**
+- OAuth 2.0 + AWS Signature V4 for SP-API authentication
+- Support for Amazon, Amazon Fresh, and Whole Foods
+- Multiple delivery window tracking
+- Shipment tracking with carrier integration
+- Sub-brand detection (Fresh, Whole Foods) via order metadata
+
+**Sprint 3.5: Walmart+ Adapter**
+- Session-based authentication (extends SessionBasedAdapter)
+- Order tracking API with slot management
+- Delivery window and slot availability
+- Cookie capture and validation flow
+- Walmart Grocery Express support
+
+**Sprint 3.6: Remaining Adapters**
+- **Shipt Adapter**: Session-based auth, Target order detection, shopper tracking
+- **Drizly Adapter**: Session-based auth, ID verification tracking, 21+ compliance
+- **Total Wine Adapter**: Onfleet API integration, webhook support, age verification
+- **Sam's Club Adapter**: Session-based auth, Instacart delegation for fulfilled orders
+
+**OAuth Callback Route**
+- Unified callback handler at `/api/auth/callback/[platform]`
+- Support for standard OAuth 2.0 and PKCE flows
+- State validation via Redis for CSRF protection
+- Automatic token encryption and storage
+- Error handling with user-friendly redirects
+
+**Adapter Registry Updates**
+- All 11 platform adapters registered with lazy loading
+- Platform-specific adapter instantiation
+- Type-safe adapter retrieval by platform name
+
+### Technical Details
+
+- **26 new files created** across 9 adapter directories
+- **2 files modified** (.env.example, registry.ts)
+- **+7,600 lines of code**
+- **Total codebase: 109 files, ~16,300 lines**
+- TypeScript compilation: PASS
+- Biome lint: PASS (4 warnings for intentional non-null assertions)
+
+### Authentication Methods by Platform
+
+| Platform | Auth Method | Implementation |
+|----------|-------------|----------------|
+| Instacart | OAuth 2.0 | Standard flow with refresh |
+| Costco | OAuth 2.0 | Via Instacart |
+| DoorDash | JWT (RS256) | jose library signing |
+| Uber Eats | OAuth 2.0 + PKCE | Code verifier/challenge |
+| Amazon | OAuth 2.0 + AWS Sig V4 | SP-API authentication |
+| Walmart+ | Session-based | Cookie capture |
+| Shipt | Session-based | Cookie capture |
+| Drizly | Session-based | Cookie capture |
+| Total Wine | API Key | Onfleet integration |
+| Sam's Club | Session-based | Cookie capture |
+
+---
+
 ## [0.2.0] - 2026-01-17
 
 ### Added
@@ -208,6 +295,7 @@ This changelog will be updated as development progresses through each phase.
 
 **Target Launch:** Q2 2026
 
-[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/doublegate/DropDeck/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/doublegate/DropDeck/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/doublegate/DropDeck/releases/tag/v0.1.0

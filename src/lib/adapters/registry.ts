@@ -133,6 +133,83 @@ class AdapterRegistry {
  */
 export const adapterRegistry = new AdapterRegistry();
 
+// ============================================
+// Register Platform Adapters (Lazy Loading)
+// ============================================
+
+/**
+ * Register all platform adapters with lazy loading
+ * Adapters are only instantiated when first accessed
+ */
+function registerAllAdapters(): void {
+  // Instacart (OAuth 2.0) - also handles Costco
+  adapterRegistry.registerLazy('instacart', async () => {
+    const { instacartAdapter } = await import('./instacart');
+    return instacartAdapter;
+  });
+
+  adapterRegistry.registerLazy('costco', async () => {
+    const { costcoAdapter } = await import('./instacart');
+    return costcoAdapter;
+  });
+
+  // DoorDash (JWT authentication)
+  adapterRegistry.registerLazy('doordash', async () => {
+    const { doordashAdapter } = await import('./doordash');
+    return doordashAdapter;
+  });
+
+  // Uber Eats (OAuth 2.0 with PKCE)
+  adapterRegistry.registerLazy('ubereats', async () => {
+    const { ubereatsAdapter } = await import('./ubereats');
+    return ubereatsAdapter;
+  });
+
+  // Amazon / Amazon Fresh (OAuth 2.0 + AWS Signature V4)
+  adapterRegistry.registerLazy('amazon', async () => {
+    const { amazonAdapter } = await import('./amazon');
+    return amazonAdapter;
+  });
+
+  adapterRegistry.registerLazy('amazon_fresh', async () => {
+    const { amazonFreshAdapter } = await import('./amazon');
+    return amazonFreshAdapter;
+  });
+
+  // Walmart+ (Session-based)
+  adapterRegistry.registerLazy('walmart', async () => {
+    const { walmartAdapter } = await import('./walmart');
+    return walmartAdapter;
+  });
+
+  // Shipt (Session-based) - also handles Target orders
+  adapterRegistry.registerLazy('shipt', async () => {
+    const { shiptAdapter } = await import('./shipt');
+    return shiptAdapter;
+  });
+
+  // Drizly (Session-based)
+  adapterRegistry.registerLazy('drizly', async () => {
+    const { drizlyAdapter } = await import('./drizly');
+    return drizlyAdapter;
+  });
+
+  // Total Wine (Onfleet API)
+  adapterRegistry.registerLazy('totalwine', async () => {
+    const { totalwineAdapter } = await import('./totalwine');
+    return totalwineAdapter;
+  });
+
+  // Sam's Club (Session-based, may delegate to Instacart)
+  adapterRegistry.registerLazy('samsclub', async () => {
+    const { samsclubAdapter } = await import('./samsclub');
+    return samsclubAdapter;
+  });
+}
+
+// Register adapters on module load
+registerAllAdapters();
+
 /**
  * Register an adapter
  */

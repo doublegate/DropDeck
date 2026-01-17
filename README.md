@@ -8,7 +8,7 @@
 
 **Every drop. One deck.**
 
-[![Project Status](https://img.shields.io/badge/status-Phase%202%20Complete-success)](https://github.com/doublegate/DropDeck)
+[![Project Status](https://img.shields.io/badge/status-Phase%203%20Complete-success)](https://github.com/doublegate/DropDeck)
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
@@ -39,17 +39,17 @@ A multi-platform delivery tracking aggregator that unifies real-time delivery tr
 
 | Platform | Category | Integration Status | Live Location | ETA |
 |----------|----------|-------------------|---------------|-----|
-| **Instacart** | Grocery | Planned | Yes | Yes |
-| **DoorDash** | Food/Convenience | Planned | Yes | Yes |
-| **Uber Eats** | Food/Grocery | Planned | Yes | Yes |
-| **Amazon** | General/Grocery | Planned | Yes | Yes |
-| **Amazon Fresh** | Grocery | Planned | Yes | Yes |
-| **Walmart+** | Grocery/General | Planned | Limited | Yes |
-| **Shipt** | Grocery | Planned | Limited | Yes |
-| **Drizly** | Alcohol | Planned | Yes | Yes |
-| **Total Wine** | Alcohol | Planned | Yes | Yes |
-| **Costco** | Wholesale | Planned (via Instacart) | Yes | Yes |
-| **Sam's Club** | Wholesale | Planned | Limited | Yes |
+| **Instacart** | Grocery | **Adapter Complete** | Yes | Yes |
+| **DoorDash** | Food/Convenience | **Adapter Complete** | Yes | Yes |
+| **Uber Eats** | Food/Grocery | **Adapter Complete** | Yes | Yes |
+| **Amazon** | General/Grocery | **Adapter Complete** | Yes | Yes |
+| **Amazon Fresh** | Grocery | **Adapter Complete** | Yes | Yes |
+| **Walmart+** | Grocery/General | **Adapter Complete** | Limited | Yes |
+| **Shipt** | Grocery | **Adapter Complete** | Limited | Yes |
+| **Drizly** | Alcohol | **Adapter Complete** | Yes | Yes |
+| **Total Wine** | Alcohol | **Adapter Complete** | Yes | Yes |
+| **Costco** | Wholesale | **Adapter Complete** (via Instacart) | Yes | Yes |
+| **Sam's Club** | Wholesale | **Adapter Complete** | Limited | Yes |
 
 ---
 
@@ -239,7 +239,7 @@ Development is organized into 6 phases with 1,516 total tasks:
 |-------|------|--------|-------|
 | 1 | [Foundation](./to-dos/PHASE-1-FOUNDATION.md) | **Complete** | 172 |
 | 2 | [Core Infrastructure](./to-dos/PHASE-2-CORE-INFRASTRUCTURE.md) | **Complete** | 153 |
-| 3 | [Platform Adapters](./to-dos/PHASE-3-PLATFORM-ADAPTERS.md) | Planned | 330 |
+| 3 | [Platform Adapters](./to-dos/PHASE-3-PLATFORM-ADAPTERS.md) | **Complete** | 330 |
 | 4 | [Real-Time Features](./to-dos/PHASE-4-REAL-TIME-FEATURES.md) | Planned | 270 |
 | 5 | [Polish & Testing](./to-dos/PHASE-5-POLISH-AND-TESTING.md) | Planned | 302 |
 | 6 | [Launch](./to-dos/PHASE-6-LAUNCH.md) | Planned | 289 |
