@@ -48,12 +48,7 @@ export function MapControls({
   className,
 }: MapControlsProps) {
   return (
-    <div
-      className={cn(
-        'absolute top-2 right-2 flex flex-col gap-1 z-10',
-        className
-      )}
-    >
+    <div className={cn('absolute top-2 right-2 flex flex-col gap-1 z-10', className)}>
       {/* Zoom controls */}
       {showZoom && (
         <div className="flex flex-col bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden">
@@ -88,7 +83,10 @@ export function MapControls({
       {/* Fullscreen toggle */}
       {showFullscreen && (
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md overflow-hidden">
-          <ControlButton onClick={onFullscreen} title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}>
+          <ControlButton
+            onClick={onFullscreen}
+            title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+          >
             {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
           </ControlButton>
         </div>
@@ -127,7 +125,14 @@ function ControlButton({
 // Icons - aria-hidden since the button has a title for accessibility
 function PlusIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
     </svg>
   );
@@ -135,7 +140,14 @@ function PlusIcon() {
 
 function MinusIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
     </svg>
   );
@@ -143,8 +155,19 @@ function MinusIcon() {
 
 function LocationIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7z" />
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7z"
+      />
       <circle cx="12" cy="9" r="2.5" />
     </svg>
   );
@@ -152,7 +175,14 @@ function LocationIcon() {
 
 function CrosshairIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
       <circle cx="12" cy="12" r="8" />
       <path strokeLinecap="round" d="M12 2v4m0 12v4M2 12h4m12 0h4" />
     </svg>
@@ -161,7 +191,14 @@ function CrosshairIcon() {
 
 function MaximizeIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4h4m12 0h-4m0 16h4v-4M4 20v-4" />
     </svg>
   );
@@ -169,8 +206,19 @@ function MaximizeIcon() {
 
 function MinimizeIcon() {
   return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 4v4H4m16 0h-4V4m0 16v-4h4M4 16h4v4" />
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M8 4v4H4m16 0h-4V4m0 16v-4h4M4 16h4v4"
+      />
     </svg>
   );
 }

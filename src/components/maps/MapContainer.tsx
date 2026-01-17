@@ -86,7 +86,10 @@ export function MapContainer({
 
       // Add navigation controls if enabled
       if (showZoomControls) {
-        map.current.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+        map.current.addControl(
+          new maplibregl.NavigationControl({ showCompass: false }),
+          'top-right'
+        );
       }
 
       // Add fullscreen control if enabled
@@ -126,7 +129,9 @@ export function MapContainer({
 
     const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
     const newStyle = getMapStyle(theme);
-    const currentStyle = (map.current.getStyle()?.metadata as Record<string, unknown>)?.['mapbox:origin'];
+    const currentStyle = (map.current.getStyle()?.metadata as Record<string, unknown>)?.[
+      'mapbox:origin'
+    ];
 
     if (currentStyle !== newStyle) {
       map.current.setStyle(newStyle);

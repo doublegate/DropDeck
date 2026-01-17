@@ -136,10 +136,7 @@ export async function publishToChannel(
 /**
  * Publish a delivery update
  */
-export async function publishDeliveryUpdate(
-  userId: string,
-  delivery: unknown
-): Promise<boolean> {
+export async function publishDeliveryUpdate(userId: string, delivery: unknown): Promise<boolean> {
   return publishToChannel(ablyChannels.userDeliveries(userId), 'delivery_update', delivery);
 }
 

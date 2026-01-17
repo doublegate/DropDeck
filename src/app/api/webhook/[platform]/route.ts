@@ -24,10 +24,7 @@ export async function POST(
 
   try {
     // Rate limiting
-    const rateLimitResult = await checkRateLimit(
-      webhookRateLimiter,
-      `webhook:${platform}`
-    );
+    const rateLimitResult = await checkRateLimit(webhookRateLimiter, `webhook:${platform}`);
 
     if (!rateLimitResult.success) {
       return NextResponse.json(

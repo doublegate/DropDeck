@@ -10,7 +10,11 @@ import type { UnifiedDelivery, DriverLocation } from '@/types/delivery';
 /**
  * Message types for pub/sub
  */
-export type MessageType = 'delivery_update' | 'location_update' | 'connection_status' | 'system_status';
+export type MessageType =
+  | 'delivery_update'
+  | 'location_update'
+  | 'connection_status'
+  | 'system_status';
 
 /**
  * Base message structure

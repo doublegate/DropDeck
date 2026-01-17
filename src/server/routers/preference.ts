@@ -77,7 +77,8 @@ export const preferenceRouter = router({
       const updateData: Record<string, unknown> = {};
       if (input.theme !== undefined) updateData.theme = input.theme;
       if (input.sortOrder !== undefined) updateData.sortOrder = input.sortOrder;
-      if (input.enabledPlatforms !== undefined) updateData.enabledPlatforms = input.enabledPlatforms;
+      if (input.enabledPlatforms !== undefined)
+        updateData.enabledPlatforms = input.enabledPlatforms;
       if (input.manualPlatformOrder !== undefined)
         updateData.manualPlatformOrder = input.manualPlatformOrder;
       if (input.notificationsEnabled !== undefined)

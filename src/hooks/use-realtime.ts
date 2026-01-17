@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react';
 import Ably from 'ably';
-import type { RealtimeEvent, DeliveryUpdateEvent, LocationUpdateEvent, ConnectionStatusEvent } from '@/lib/realtime/events';
+import type {
+  RealtimeEvent,
+  DeliveryUpdateEvent,
+  LocationUpdateEvent,
+  ConnectionStatusEvent,
+} from '@/lib/realtime/events';
 
 /**
  * Connection state for real-time

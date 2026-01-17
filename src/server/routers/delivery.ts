@@ -163,10 +163,7 @@ export const deliveryRouter = router({
           limit: input.limit,
           offset: input.offset,
         }),
-        ctx.db
-          .select({ count: sql<number>`count(*)::int` })
-          .from(deliveryHistory)
-          .where(where),
+        ctx.db.select({ count: sql<number>`count(*)::int` }).from(deliveryHistory).where(where),
       ]);
 
       const total = totalResult[0]?.count ?? 0;

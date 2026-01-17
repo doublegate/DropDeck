@@ -159,9 +159,7 @@ export const platformRouter = router({
 
       // Encrypt and store
       const accessTokenEncrypted = encryptToken(tokens.accessToken);
-      const refreshTokenEncrypted = tokens.refreshToken
-        ? encryptToken(tokens.refreshToken)
-        : null;
+      const refreshTokenEncrypted = tokens.refreshToken ? encryptToken(tokens.refreshToken) : null;
 
       await ctx.db
         .insert(platformConnections)
