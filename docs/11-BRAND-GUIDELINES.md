@@ -346,7 +346,7 @@ Platform colors should be used sparingly for identification, not as primary desi
 
 ```
 +------------------------------------------------------------------+
-|  [Logo Horizontal Light]        [Settings] [Profile]              |
+|  [Logo Horizontal Light]        [Settings] [Profile]             |
 +------------------------------------------------------------------+
 ```
 
@@ -354,7 +354,7 @@ Platform colors should be used sparingly for identification, not as primary desi
 
 ```
 +------------------------------------------------------------------+
-|  [Logo Horizontal Dark]         [Settings] [Profile]              |
+|  [Logo Horizontal Dark]         [Settings] [Profile]             |
 +------------------------------------------------------------------+
 ```
 
