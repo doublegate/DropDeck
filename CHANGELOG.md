@@ -7,6 +7,77 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-01-17
+
+### Added
+
+#### Phase 2: Core Infrastructure Complete
+
+**Sprint 2.1: tRPC Setup**
+- tRPC 11.x with superjson transformer for Date/Map serialization
+- Type-safe procedures with Zod input validation
+- Context factory with session, database, and Redis integration
+- Public and protected procedure middlewares
+- Rate limiting middleware using @upstash/ratelimit
+- Complete router structure:
+  - `platform` - Connection management, OAuth flow, sync
+  - `delivery` - Active deliveries, history, real-time subscriptions
+  - `preference` - User settings and notification preferences
+  - `user` - Profile, stats, account management
+- TanStack Query integration with React hooks
+- API route handler for Next.js App Router
+
+**Sprint 2.2: Platform Adapter Base**
+- Abstract `PlatformAdapter` class with OAuth and session methods
+- `SessionBasedAdapter` for platforms without APIs
+- Adapter registry with lazy loading
+- Complete status mapping for all 11 platforms:
+  - Instacart, DoorDash, Uber Eats, Amazon, Walmart+
+  - Shipt, Drizly, Total Wine, Costco, Sam's Club
+- Platform-specific error hierarchy:
+  - `PlatformAuthError`, `PlatformRateLimitError`
+  - `PlatformUnavailableError`, `PlatformDataError`
+- Common utilities: ETA calculation, coordinate utilities, retry logic
+
+**Sprint 2.3: Real-Time Infrastructure**
+- Upstash Redis client for caching and pub/sub
+- Ably WebSocket client with token authentication
+- Pub/Sub bridge system between Redis and Ably
+- Channel naming conventions:
+  - `user:{userId}:deliveries` - Delivery updates
+  - `delivery:{id}:location` - Driver location
+  - `system:status` - System announcements
+- Zod-validated event schemas:
+  - `DeliveryUpdateEvent`, `LocationUpdateEvent`
+  - `ConnectionStatusEvent`, `SystemStatusEvent`
+- React hooks: `useRealTimeUpdates`, `useLocationSubscription`
+- Webhook handler with signature verification and idempotency
+- AES-256-GCM token encryption utilities
+
+**Sprint 2.4: MapLibre Integration**
+- MapLibre GL JS 5.x with react-map-gl
+- OpenFreeMap tile sources (no API key required)
+- Light and dark mode map styles
+- Map components:
+  - `MapContainer` - Wrapper with loading/error states
+  - `MapControls` - Zoom, center, fullscreen controls
+  - `DriverMarker` - Animated driver icon with platform colors
+  - `DestinationMarker` - Delivery address marker with popup
+- Smooth position interpolation for marker animation
+- Theme synchronization with app theme
+- Bounds calculation for multiple markers
+
+### Technical Details
+
+- **31 new files created**
+- **2 files modified**
+- **+4,000 lines of code**
+- **Total codebase: 89 files, ~8,700 lines**
+- TypeScript compilation: PASS
+- Biome lint: PASS (4 warnings for intentional non-null assertions)
+
+---
+
 ## [0.1.0] - 2026-01-17
 
 ### Added
@@ -137,5 +208,6 @@ This changelog will be updated as development progresses through each phase.
 
 **Target Launch:** Q2 2026
 
-[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/doublegate/DropDeck/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/doublegate/DropDeck/releases/tag/v0.1.0

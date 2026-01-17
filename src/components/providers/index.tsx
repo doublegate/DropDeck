@@ -2,6 +2,7 @@
 
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { TRPCProvider } from '@/lib/trpc/react';
 import { ThemeProvider } from './theme-provider';
 
 interface ProvidersProps {
@@ -11,10 +12,12 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeProvider>
-      <TooltipProvider>
-        {children}
-        <Toaster />
-      </TooltipProvider>
+      <TRPCProvider>
+        <TooltipProvider>
+          {children}
+          <Toaster />
+        </TooltipProvider>
+      </TRPCProvider>
     </ThemeProvider>
   );
 }

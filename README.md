@@ -8,7 +8,7 @@
 
 **Every drop. One deck.**
 
-[![Project Status](https://img.shields.io/badge/status-Phase%201%20Complete-success)](https://github.com/doublegate/DropDeck)
+[![Project Status](https://img.shields.io/badge/status-Phase%202%20Complete-success)](https://github.com/doublegate/DropDeck)
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
@@ -183,17 +183,26 @@ DropDeck/
 │   ├── app/               # Next.js App Router pages
 │   │   ├── (auth)/        # Authentication routes
 │   │   ├── (dashboard)/   # Dashboard routes
+│   │   ├── api/trpc/      # tRPC API handler
+│   │   ├── api/webhook/   # Platform webhook handlers
 │   │   └── layout.tsx     # Root layout with providers
 │   ├── components/        # React components
 │   │   ├── layout/        # Layout components (Header, Sidebar, etc.)
+│   │   ├── maps/          # MapLibre map components
 │   │   ├── ui/            # shadcn/ui components
-│   │   └── providers/     # Context providers
+│   │   └── providers/     # Context providers (Auth, Theme, tRPC)
 │   ├── hooks/             # Custom React hooks
 │   ├── lib/               # Utilities and configurations
+│   │   ├── adapters/      # Platform adapter framework
 │   │   ├── auth/          # NextAuth.js configuration
 │   │   ├── db/            # Drizzle ORM schema and client
+│   │   ├── encryption/    # AES-256-GCM token encryption
+│   │   ├── maps/          # MapLibre configuration
+│   │   ├── realtime/      # Redis pub/sub and Ably WebSockets
+│   │   ├── trpc/          # tRPC initialization and client
 │   │   └── utils/         # Helper utilities
-│   ├── server/            # Server-side code (tRPC, adapters)
+│   ├── server/            # Server-side code
+│   │   └── routers/       # tRPC routers (platform, delivery, etc.)
 │   ├── stores/            # Zustand stores
 │   └── types/             # TypeScript type definitions
 ├── drizzle/               # Database migrations
@@ -229,7 +238,7 @@ Development is organized into 6 phases with 1,516 total tasks:
 | Phase | Name | Status | Tasks |
 |-------|------|--------|-------|
 | 1 | [Foundation](./to-dos/PHASE-1-FOUNDATION.md) | **Complete** | 172 |
-| 2 | [Core Infrastructure](./to-dos/PHASE-2-CORE-INFRASTRUCTURE.md) | Planned | 153 |
+| 2 | [Core Infrastructure](./to-dos/PHASE-2-CORE-INFRASTRUCTURE.md) | **Complete** | 153 |
 | 3 | [Platform Adapters](./to-dos/PHASE-3-PLATFORM-ADAPTERS.md) | Planned | 330 |
 | 4 | [Real-Time Features](./to-dos/PHASE-4-REAL-TIME-FEATURES.md) | Planned | 270 |
 | 5 | [Polish & Testing](./to-dos/PHASE-5-POLISH-AND-TESTING.md) | Planned | 302 |
