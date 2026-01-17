@@ -1,7 +1,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/DropDeck-logo-horizontal-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./images/DropDeck-logo-horizontal.svg">
-  <img alt="DropDeck Logo" src="./images/DropDeck-logo-horizontal.svg" width="300">
+  <img alt="DropDeck Logo" src="./images/DropDeck-logo-horizontal.svg" width="600">
 </picture>
 
 # DropDeck
