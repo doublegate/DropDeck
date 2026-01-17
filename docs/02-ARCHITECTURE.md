@@ -172,6 +172,58 @@ flowchart LR
 | **Infrastructure** | Auth | NextAuth.js configuration |
 | **Infrastructure** | WebSocket | Ably/WebSocket connection management |
 
+### UI Component Architecture
+
+The UI follows the DropDeck Design System defined in [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md).
+
+```mermaid
+graph TB
+    subgraph DesignSystem["Design System Layer"]
+        Colors[Color Tokens]
+        Typography[Type Scale]
+        Spacing[Spacing Scale]
+        Motion[Animation Variants]
+    end
+
+    subgraph BaseComponents["Base Components (shadcn/ui)"]
+        Button[Button]
+        Card[Card]
+        Dialog[Dialog]
+        Input[Input]
+        Select[Select]
+    end
+
+    subgraph DomainComponents["Domain Components"]
+        DeliveryCard[DeliveryCard]
+        PlatformBadge[PlatformBadge]
+        ETADisplay[ETADisplay]
+        StatusBadge[StatusBadge]
+    end
+
+    subgraph MapComponents["Map Components"]
+        MapContainer[MapContainer]
+        DriverMarker[DriverMarker]
+        DestinationMarker[DestinationMarker]
+        RoutePolyline[RoutePolyline]
+    end
+
+    DesignSystem --> BaseComponents
+    BaseComponents --> DomainComponents
+    DomainComponents --> MapComponents
+```
+
+#### Key Component Specifications
+
+| Component | Design Reference | Key Styles |
+|-----------|------------------|------------|
+| `DeliveryCard` | Design System 5.1 | `rounded-xl shadow-md` with hover elevation |
+| `PlatformBadge` | Design System 5.2 | Platform color at 15% opacity background |
+| `StatusBadge` | Design System 5.3 | Semantic colors (green/cyan/amber/red) |
+| `ETADisplay` | Design System 5.5 | `text-2xl font-bold tabular-nums` |
+| `MapContainer` | Design System 5.4 | `aspect-ratio: 16/10`, `rounded-lg` |
+
+See [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) for complete visual specifications.
+
 ---
 
 ## Directory Structure
@@ -798,4 +850,17 @@ flowchart TB
 
 ---
 
-*Document Version: 1.0 | Last Updated: January 2026*
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) | Visual design system with component specifications |
+| [11-BRAND-GUIDELINES.md](./11-BRAND-GUIDELINES.md) | Brand identity and logo usage |
+| [01-FEATURES.md](./01-FEATURES.md) | Feature specifications and acceptance criteria |
+| [03-TECHNOLOGY-STACK.md](./03-TECHNOLOGY-STACK.md) | Technology choices and configurations |
+
+---
+
+*Document Version: 1.1 | Last Updated: January 2026*

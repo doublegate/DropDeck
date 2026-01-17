@@ -398,6 +398,7 @@ getTTFB(reportWebVitals);
 **Duration:** 5 days
 **Complexity:** Medium
 **Dependencies:** Sprint 5.1
+**Design Reference:** [docs/10-UI-UX-DESIGN-SYSTEM.md#accessibility](../docs/10-UI-UX-DESIGN-SYSTEM.md#accessibility)
 
 ### Objectives
 - Achieve WCAG 2.1 AA compliance
@@ -405,6 +406,7 @@ getTTFB(reportWebVitals);
 - Support screen readers
 - Implement proper focus management
 - Test with accessibility tools
+- Verify Design System color contrast compliance
 
 ### Tasks
 
@@ -443,19 +445,25 @@ getTTFB(reportWebVitals);
 - [ ] Announce page changes
 - [ ] Handle dynamic content
 
-#### Color and Contrast
-- [ ] Check color contrast ratios
-- [ ] Don't rely on color alone
-- [ ] Test with color blindness simulators
+#### Color and Contrast (Design System Compliance)
+- [ ] Verify Design System color contrast ratios:
+  - [ ] Slate 800 on White: 12.6:1 (Pass AAA)
+  - [ ] Slate 700 on Slate 50: 7.4:1 (Pass AAA)
+  - [ ] Cyan 500 on Slate 900: 6.3:1 (Pass AA)
+  - [ ] White on Slate 800: 12.6:1 (Pass AAA)
+- [ ] Don't rely on color alone (add icons/text)
+- [ ] Test with color blindness simulators (protanopia, deuteranopia)
 - [ ] High contrast mode support
-- [ ] Dark mode accessibility
+- [ ] Dark mode accessibility verification
+- [ ] Verify status colors have text labels (not color alone)
 
-#### Motion and Animation
-- [ ] Respect prefers-reduced-motion
+#### Motion and Animation (Design System Section 6)
+- [ ] Respect `prefers-reduced-motion` media query
+- [ ] Disable animations when reduced motion preferred
 - [ ] Pause animations on hover
-- [ ] Provide animation controls
+- [ ] Provide animation controls where needed
 - [ ] Avoid flashing content
-- [ ] Smooth transitions
+- [ ] Verify all transitions use Design System durations (150-300ms)
 
 #### Screen Reader Testing
 - [ ] Test with NVDA (Windows)
@@ -684,4 +692,44 @@ Phase 5 completion enables:
 
 ---
 
-*Phase 5 Est. Completion: Week 16 | Total Tasks: 138*
+---
+
+## Design System Testing Checklist
+
+Before Phase 5 completion, verify Design System compliance:
+
+### Visual Regression Testing
+- [ ] Set up visual regression testing (Chromatic, Percy, or Playwright screenshots)
+- [ ] Capture baseline screenshots for all components
+- [ ] Test light mode rendering
+- [ ] Test dark mode rendering
+- [ ] Test responsive breakpoints (mobile, tablet, desktop, wide)
+
+### Design System Compliance
+- [ ] All colors match Design System tokens
+- [ ] Typography uses correct font sizes and weights
+- [ ] Spacing uses 4px-based scale
+- [ ] Border radius uses Design System values (6px, 12px, 16px)
+- [ ] Shadows match Design System specifications
+- [ ] Animations use correct durations and easing
+
+### Brand Compliance
+- [ ] Logo displays correctly in all contexts
+- [ ] Platform badges use correct colors
+- [ ] Status indicators use semantic colors
+- [ ] Focus states use Drop Cyan (`#06B6D4`)
+
+---
+
+## Design System References
+
+| Topic | Document |
+|-------|----------|
+| Accessibility | [10-UI-UX-DESIGN-SYSTEM.md#accessibility](../docs/10-UI-UX-DESIGN-SYSTEM.md#accessibility) |
+| Color Contrast | [10-UI-UX-DESIGN-SYSTEM.md#color-system](../docs/10-UI-UX-DESIGN-SYSTEM.md#color-system) |
+| Motion Guidelines | [10-UI-UX-DESIGN-SYSTEM.md#animation-and-motion](../docs/10-UI-UX-DESIGN-SYSTEM.md#animation-and-motion) |
+| Brand Guidelines | [11-BRAND-GUIDELINES.md](../docs/11-BRAND-GUIDELINES.md) |
+
+---
+
+*Phase 5 Est. Completion: Week 16 | Total Tasks: 152*

@@ -247,51 +247,74 @@ export const config = {
 **Duration:** 5 days
 **Complexity:** Medium
 **Dependencies:** Sprint 1.1
+**Design Reference:** [docs/10-UI-UX-DESIGN-SYSTEM.md](../docs/10-UI-UX-DESIGN-SYSTEM.md)
 
 ### Objectives
-- Set up Tailwind CSS 4.x
+- Set up Tailwind CSS 4.x with DropDeck Design System
 - Install and configure shadcn/ui
-- Create base component library
+- Create base component library with brand styling
 - Implement theme system (light/dark/system)
+- Integrate DropDeck branding assets
 
 ### Tasks
 
+#### Design System Setup
+- [ ] Create `globals.css` with DropDeck CSS custom properties (see Design System Section 2)
+- [ ] Define brand color tokens:
+  - [ ] `--color-brand-navy: #1E293B` (Deck Navy)
+  - [ ] `--color-brand-cyan: #06B6D4` (Drop Cyan)
+  - [ ] `--color-success: #10B981` (Signal Green)
+  - [ ] `--color-warning: #F59E0B` (Alert Amber)
+  - [ ] `--color-error: #EF4444` (Urgent Red)
+- [ ] Define platform color tokens for all 10 platforms
+- [ ] Set up theme-aware CSS variables (`:root` and `.dark`)
+
 #### Tailwind Configuration
 - [ ] Verify Tailwind 4.x is installed
-- [ ] Create custom color palette in CSS variables
-- [ ] Add platform brand colors
-- [ ] Configure responsive breakpoints
-- [ ] Set up typography plugin
+- [ ] Configure `@theme` block with design system tokens
+- [ ] Add border radius scale (`--radius-sm/md/lg/full`)
+- [ ] Configure responsive breakpoints (sm:640px, md:768px, lg:1024px, xl:1280px)
+- [ ] Set up typography with Inter and JetBrains Mono fonts
+- [ ] Add font loading optimization via `next/font`
 
 #### shadcn/ui Setup
 - [ ] Initialize shadcn/ui: `bunx shadcn@latest init`
 - [ ] Configure component location (`src/components/ui`)
-- [ ] Install base components:
-  - [ ] `button`
-  - [ ] `card`
-  - [ ] `dialog`
+- [ ] Customize shadcn theme to use DropDeck colors
+- [ ] Install and brand base components:
+  - [ ] `button` (Drop Cyan for primary variant)
+  - [ ] `card` (rounded-xl, design system shadows)
+  - [ ] `dialog` (rounded-lg corners)
   - [ ] `dropdown-menu`
   - [ ] `input`
   - [ ] `select`
-  - [ ] `skeleton`
-  - [ ] `switch`
-  - [ ] `toast`
+  - [ ] `skeleton` (Slate-200/700 pulse)
+  - [ ] `switch` (Drop Cyan when active)
+  - [ ] `toast` (semantic status colors)
   - [ ] `tooltip`
+
+#### Logo Integration
+- [ ] Copy logo SVGs to `public/` or configure Next.js image imports
+- [ ] Create `Logo` component with light/dark variants
+- [ ] Implement logo switching based on theme
+- [ ] Add favicon from `images/DropDeck-icon-simple.svg`
+- [ ] Configure app icons for PWA manifest
 
 #### Layout Components
 - [ ] Create root layout (`app/layout.tsx`)
 - [ ] Create dashboard layout (`app/(dashboard)/layout.tsx`)
-- [ ] Create `Header` component
+- [ ] Create `Header` component with logo integration
 - [ ] Create `Sidebar` component (collapsible)
 - [ ] Create `MobileNav` component
-- [ ] Implement responsive navigation
+- [ ] Implement responsive navigation per Design System breakpoints
 
 #### Theme System
 - [ ] Install next-themes: `bun add next-themes`
 - [ ] Create `ThemeProvider` component
 - [ ] Implement theme toggle (light/dark/system)
 - [ ] Persist theme preference to localStorage
-- [ ] Add CSS transitions for theme changes
+- [ ] Add CSS transitions (200ms ease-in-out per Design System)
+- [ ] Configure map style switching based on theme
 
 #### Provider Setup
 - [ ] Create `Providers` wrapper component
@@ -300,13 +323,21 @@ export const config = {
 - [ ] Add toast provider
 - [ ] Add tRPC provider (placeholder)
 
+#### Animation Foundation
+- [ ] Install Framer Motion: `bun add framer-motion`
+- [ ] Create `lib/motion/variants.ts` with design system animation variants
+- [ ] Add reduced motion support (`prefers-reduced-motion`)
+
 ### Acceptance Criteria
-- [ ] All shadcn/ui components render correctly
-- [ ] Theme toggles between light/dark/system
+- [ ] All shadcn/ui components render with DropDeck brand styling
+- [ ] Theme toggles between light/dark/system with 200ms transitions
 - [ ] Theme persists across page reloads
-- [ ] Layout is responsive at all breakpoints
-- [ ] Sidebar collapses on mobile
-- [ ] Toast notifications work
+- [ ] Layout is responsive at all Design System breakpoints
+- [ ] Sidebar collapses on mobile (< 640px)
+- [ ] Toast notifications work with semantic colors
+- [ ] Logo displays correctly in both themes
+- [ ] Focus states use Drop Cyan (`#06B6D4`)
+- [ ] Color contrast meets WCAG 2.1 AA standards
 
 ### Technical Notes
 ```typescript
@@ -319,6 +350,15 @@ export const config = {
 >
   {children}
 </ThemeProvider>
+```
+
+```css
+/* Theme transition */
+* {
+  transition: color 200ms ease-in-out,
+              background-color 200ms ease-in-out,
+              border-color 200ms ease-in-out;
+}
 ```
 
 ---
@@ -368,4 +408,18 @@ Phase 1 completion enables:
 
 ---
 
-*Phase 1 Est. Completion: Week 3 | Total Tasks: 68*
+---
+
+## Design System References
+
+| Topic | Document |
+|-------|----------|
+| Color System | [10-UI-UX-DESIGN-SYSTEM.md#color-system](../docs/10-UI-UX-DESIGN-SYSTEM.md#color-system) |
+| Typography | [10-UI-UX-DESIGN-SYSTEM.md#typography](../docs/10-UI-UX-DESIGN-SYSTEM.md#typography) |
+| Spacing & Layout | [10-UI-UX-DESIGN-SYSTEM.md#spacing-and-layout](../docs/10-UI-UX-DESIGN-SYSTEM.md#spacing-and-layout) |
+| Dark Mode | [10-UI-UX-DESIGN-SYSTEM.md#dark-mode-implementation](../docs/10-UI-UX-DESIGN-SYSTEM.md#dark-mode-implementation) |
+| Logo Usage | [11-BRAND-GUIDELINES.md#logo-system](../docs/11-BRAND-GUIDELINES.md#logo-system) |
+
+---
+
+*Phase 1 Est. Completion: Week 3 | Total Tasks: 82*

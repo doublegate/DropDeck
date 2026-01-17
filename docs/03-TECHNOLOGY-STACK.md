@@ -181,24 +181,42 @@ function ETACountdown({ targetTime }: { targetTime: Date }) {
 
 #### Configuration
 
+The complete Tailwind configuration aligns with the DropDeck Design System. See [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md#css-custom-properties-tailwind-css-4x) for the full specification.
+
 ```css
-/* globals.css */
+/* globals.css - DropDeck Brand Colors */
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: hsl(221 83% 53%);
-  --color-secondary: hsl(210 40% 96%);
-  --color-destructive: hsl(0 84% 60%);
-  --color-muted: hsl(210 40% 96%);
-  --color-accent: hsl(210 40% 96%);
+  /* Brand Colors */
+  --color-brand-navy: #1E293B;
+  --color-brand-cyan: #06B6D4;
 
-  /* Platform colors */
-  --color-instacart: #43B02A;
-  --color-doordash: #FF3008;
-  --color-ubereats: #06C167;
-  --color-amazon: #FF9900;
-  --color-walmart: #0071DC;
-  --color-shipt: #00A651;
+  /* Semantic Colors */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+
+  /* Platform Colors */
+  --color-platform-doordash: #FF3008;
+  --color-platform-ubereats: #06C167;
+  --color-platform-instacart: #43B02A;
+  --color-platform-amazon: #FF9900;
+  --color-platform-walmart: #0071DC;
+  --color-platform-shipt: #00A859;
+  --color-platform-costco: #E31837;
+  --color-platform-samsclub: #0067A0;
+  --color-platform-totalwine: #6D2C41;
+  --color-platform-drizly: #6B46C1;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Border Radius (Design System) */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
 }
 ```
 
@@ -219,17 +237,27 @@ function ETACountdown({ targetTime }: { targetTime: Date }) {
 
 #### Components Used
 
-| Component | Use Case |
-|-----------|----------|
-| `Button` | Actions, links |
-| `Card` | Delivery panes |
-| `Dialog` | Modals, confirmations |
-| `DropdownMenu` | Sort options, user menu |
-| `Select` | Platform selection |
-| `Skeleton` | Loading states |
-| `Switch` | Toggle settings |
-| `Toast` | Notifications |
-| `Tooltip` | Help text |
+| Component | Use Case | Design System Reference |
+|-----------|----------|-------------------------|
+| `Button` | Actions, links | Drop Cyan for primary |
+| `Card` | Delivery panes | `rounded-xl` per Design System |
+| `Dialog` | Modals, confirmations | `rounded-lg` corners |
+| `DropdownMenu` | Sort options, user menu | Standard styling |
+| `Select` | Platform selection | Standard styling |
+| `Skeleton` | Loading states | Slate-200/700 pulse |
+| `Switch` | Toggle settings | Drop Cyan when active |
+| `Toast` | Notifications | Semantic colors |
+| `Tooltip` | Help text | Standard styling |
+
+#### Design System Integration
+
+All shadcn/ui components are customized to match the DropDeck Design System:
+- **Colors**: Use brand tokens (`--color-brand-cyan`, `--color-brand-navy`)
+- **Border Radius**: Use design system radius (`--radius-sm`, `--radius-md`)
+- **Typography**: Inter font family with design system type scale
+- **Focus States**: Drop Cyan (`#06B6D4`) focus rings
+
+See [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) for complete visual specifications.
 
 ---
 
@@ -882,4 +910,36 @@ if (typeof window !== 'undefined') {
 
 ---
 
-*Document Version: 1.0 | Last Updated: January 2026*
+---
+
+## UI/UX Implementation
+
+For visual design specifications and brand guidelines, refer to:
+
+| Document | Content |
+|----------|---------|
+| [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) | Complete design system: colors, typography, spacing, components, animations |
+| [11-BRAND-GUIDELINES.md](./11-BRAND-GUIDELINES.md) | Logo usage, voice and tone, platform branding |
+
+### Animation Library: Framer Motion
+
+**Version:** 11.x
+**Purpose:** Animation and motion design
+
+```typescript
+// Design system animation variants (lib/motion/variants.ts)
+export const cardVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { duration: 0.2, ease: 'easeOut' }
+  },
+  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.15 } }
+};
+```
+
+See [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md#animation-and-motion) for complete animation specifications.
+
+---
+
+*Document Version: 1.1 | Last Updated: January 2026*

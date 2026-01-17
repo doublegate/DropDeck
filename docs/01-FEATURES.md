@@ -623,9 +623,33 @@ All features must comply with WCAG 2.1 AA standards:
 | **Keyboard Navigation** | All controls accessible via Tab, Enter, Space, Arrow keys |
 | **Screen Reader Support** | ARIA labels, live regions for updates, semantic HTML |
 | **Color Contrast** | Minimum 4.5:1 for text, 3:1 for UI components |
-| **Focus Indicators** | Visible focus rings on all interactive elements |
+| **Focus Indicators** | Visible focus rings on all interactive elements (Drop Cyan `#06B6D4`) |
 | **Motion Sensitivity** | Respect `prefers-reduced-motion` media query |
 | **Text Scaling** | UI remains functional at 200% zoom |
+
+See [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md#accessibility) for detailed accessibility specifications including color contrast ratios, ARIA patterns, and focus state implementations.
+
+---
+
+## UI/UX Design References
+
+For visual design specifications and implementation details, refer to:
+
+| Document | Content |
+|----------|---------|
+| [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) | Color system, typography, spacing, component patterns, animations |
+| [11-BRAND-GUIDELINES.md](./11-BRAND-GUIDELINES.md) | Logo usage, voice and tone, platform branding |
+
+### Key Design Decisions
+
+| Feature | Design Reference |
+|---------|------------------|
+| Delivery Cards | Borderless pane design with subtle elevation per Design System Section 5 |
+| Platform Badges | Platform-specific colors at 15% opacity background |
+| Status Indicators | Semantic colors (Green=delivered, Cyan=active, Amber=delayed, Red=error) |
+| ETA Display | Prominent 24px bold, tabular-nums for countdown |
+| Theme Support | CSS class-based with `next-themes`, 200ms transitions |
+| Map Styling | Light/dark variants from OpenFreeMap |
 
 ---
 
@@ -649,4 +673,17 @@ graph TD
 
 ---
 
-*Document Version: 1.0 | Last Updated: January 2026*
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) | Complete design system with visual specifications |
+| [11-BRAND-GUIDELINES.md](./11-BRAND-GUIDELINES.md) | Brand identity and usage guidelines |
+| [02-ARCHITECTURE.md](./02-ARCHITECTURE.md) | Component architecture details |
+| [03-TECHNOLOGY-STACK.md](./03-TECHNOLOGY-STACK.md) | UI technology choices |
+
+---
+
+*Document Version: 1.1 | Last Updated: January 2026*

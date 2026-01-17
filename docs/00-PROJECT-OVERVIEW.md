@@ -323,6 +323,8 @@ sequenceDiagram
 | [07-SECURITY.md](./07-SECURITY.md) | Security architecture and practices |
 | [08-TESTING-STRATEGY.md](./08-TESTING-STRATEGY.md) | Testing approach and coverage targets |
 | [09-DEPLOYMENT.md](./09-DEPLOYMENT.md) | Deployment and CI/CD configuration |
+| [10-UI-UX-DESIGN-SYSTEM.md](./10-UI-UX-DESIGN-SYSTEM.md) | Complete UI/UX design system |
+| [11-BRAND-GUIDELINES.md](./11-BRAND-GUIDELINES.md) | Brand identity and usage guidelines |
 
 ---
 

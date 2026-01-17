@@ -37,10 +37,11 @@ gantt
 **Duration:** 6 days
 **Complexity:** High
 **Dependencies:** Phase 2 (MapLibre), Phase 3 (adapters with location data)
+**Design Reference:** [docs/10-UI-UX-DESIGN-SYSTEM.md](../docs/10-UI-UX-DESIGN-SYSTEM.md)
 
 ### Objectives
 - Integrate MapLibre with real delivery data
-- Implement smooth marker animations
+- Implement smooth marker animations (60fps per Design System)
 - Show driver routes and destinations
 - Handle multiple simultaneous deliveries
 
@@ -53,12 +54,22 @@ gantt
 - [ ] Handle coordinate validation
 - [ ] Cache last known positions
 
+#### Map Container Styling
+- [ ] Create `MapContainer` component with Design System styles:
+  - [ ] `aspect-ratio: 16/10` per Design System
+  - [ ] `border-radius: 8px` (rounded-lg)
+  - [ ] Background: `#F1F5F9` (light) / `#334155` (dark)
+- [ ] Implement light/dark map tile switching
+- [ ] Add attribution control styling
+
 #### Delivery Marker Component
 - [ ] Create `DeliveryMarker` component (`components/map/delivery-marker.tsx`)
-- [ ] Add platform-specific icons
+- [ ] Add platform-specific icons with Design System styling:
+  - [ ] 32x32px white background with 4px border-radius
+  - [ ] 2px box-shadow per Design System
 - [ ] Show driver info on hover
-- [ ] Display delivery status badge
-- [ ] Add pulse animation for active deliveries
+- [ ] Display delivery status badge with semantic colors
+- [ ] Add pulse animation for active deliveries (Cyan glow)
 
 #### Smooth Animation System
 - [ ] Implement position interpolation
@@ -189,12 +200,16 @@ function animateMarker(marker: AnimatedMarker, duration: number = 1000) {
 - [ ] Handle API rate limits
 - [ ] Cache traffic data appropriately
 
-#### ETA Display Component
+#### ETA Display Component (Design System Section 5.5)
 - [ ] Create `ETADisplay` component (`components/delivery/eta-display.tsx`)
-- [ ] Show primary ETA prominently
-- [ ] Display confidence indicator
+- [ ] Style per Design System:
+  - [ ] `font-size: 24px` / `font-weight: 700` for primary ETA
+  - [ ] `font-variant-numeric: tabular-nums` for countdown
+  - [ ] Drop Cyan color for "arriving" state
+  - [ ] Signal Green for "delivered" state
+- [ ] Display confidence indicator (high/medium/low badge)
 - [ ] Show ETA range if applicable
-- [ ] Add "arriving soon" states
+- [ ] Add pulse animation for "arriving soon" (2s ease-in-out)
 
 #### ETA Timeline
 - [ ] Create timeline visualization
@@ -394,38 +409,49 @@ class NotificationService {
 **Duration:** 7 days
 **Complexity:** Medium-High
 **Dependencies:** All previous Phase 4 sprints
+**Design Reference:** [docs/10-UI-UX-DESIGN-SYSTEM.md](../docs/10-UI-UX-DESIGN-SYSTEM.md)
 
 ### Objectives
-- Build the main dashboard view
-- Create delivery card components
+- Build the main dashboard view per Design System specifications
+- Create delivery card components with brand styling
 - Implement timeline visualization
 - Add filtering and sorting
 
 ### Tasks
 
-#### Dashboard Layout
+#### Dashboard Layout (Design System Section 4)
 - [ ] Create dashboard page (`app/(dashboard)/page.tsx`)
-- [ ] Design responsive grid layout
+- [ ] Implement responsive grid layout:
+  - [ ] Mobile (< 640px): 1 column, 16px gap
+  - [ ] Tablet (640-1024px): 2 columns, 20px gap
+  - [ ] Desktop (1024-1440px): 3 columns, 24px gap
+  - [ ] Wide (> 1440px): 4 columns, 24px gap
 - [ ] Add map section (collapsible)
 - [ ] Add delivery list section
 - [ ] Implement mobile-first design
 
-#### Delivery Card Component
+#### Delivery Card Component (Design System Section 5.1)
 - [ ] Create `DeliveryCard` component (`components/delivery/delivery-card.tsx`)
-- [ ] Display platform icon and name
-- [ ] Show current status with badge
-- [ ] Display ETA prominently
+- [ ] Apply Design System card styling:
+  - [ ] Background: `#FFFFFF` (light) / `#1E293B` (dark)
+  - [ ] Border: 1px `#E2E8F0` (light) / `#334155` (dark)
+  - [ ] Border-radius: 12px (rounded-xl)
+  - [ ] Shadow: `0 1px 3px rgba(0,0,0,0.1)`
+  - [ ] Hover: `-translate-y-0.5`, increased shadow
+- [ ] Display platform badge with platform color (15% opacity bg)
+- [ ] Show current status with semantic color badge
+- [ ] Display ETA prominently (24px bold)
 - [ ] Show order summary (items, total)
 - [ ] Add progress indicator
 - [ ] Handle click to expand details
 
-#### Delivery Card States
-- [ ] Design pending state
-- [ ] Design in-progress state (animated)
-- [ ] Design arriving soon state (highlighted)
-- [ ] Design delivered state
-- [ ] Design cancelled state
-- [ ] Handle loading/skeleton state
+#### Delivery Card States (Design System Section 5.3)
+- [ ] Design pending state (Slate-500 muted)
+- [ ] Design in-progress state (Cyan badge, pulse animation)
+- [ ] Design arriving soon state (Cyan, highlighted glow)
+- [ ] Design delivered state (Green badge)
+- [ ] Design cancelled state (muted styling)
+- [ ] Handle loading/skeleton state (Slate-200/700 pulse)
 
 #### Expanded Delivery View
 - [ ] Create `DeliveryDetails` component
@@ -600,4 +626,18 @@ Phase 4 completion enables:
 
 ---
 
-*Phase 4 Est. Completion: Week 13 | Total Tasks: 118*
+---
+
+## Design System References
+
+| Topic | Document |
+|-------|----------|
+| Component Patterns | [10-UI-UX-DESIGN-SYSTEM.md#component-design-patterns](../docs/10-UI-UX-DESIGN-SYSTEM.md#component-design-patterns) |
+| Animation & Motion | [10-UI-UX-DESIGN-SYSTEM.md#animation-and-motion](../docs/10-UI-UX-DESIGN-SYSTEM.md#animation-and-motion) |
+| Responsive Breakpoints | [10-UI-UX-DESIGN-SYSTEM.md#responsive-design](../docs/10-UI-UX-DESIGN-SYSTEM.md#responsive-design) |
+| Status Indicators | [10-UI-UX-DESIGN-SYSTEM.md#status-indicators](../docs/10-UI-UX-DESIGN-SYSTEM.md#status-indicators) |
+| Platform Badges | [10-UI-UX-DESIGN-SYSTEM.md#platform-badges](../docs/10-UI-UX-DESIGN-SYSTEM.md#platform-badges) |
+
+---
+
+*Phase 4 Est. Completion: Week 13 | Total Tasks: 126*
