@@ -1,0 +1,254 @@
+@import 'tailwindcss';
+
+/* ============================================
+   DropDeck Design System - Tailwind CSS 4.x
+   ============================================ */
+
+@theme {
+  /* Brand Colors */
+  --color-brand-navy: #1E293B;
+  --color-brand-cyan: #06B6D4;
+  --color-brand-cyan-dark: #0891B2;
+
+  /* Semantic Colors */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #06B6D4;
+
+  /* Platform Colors */
+  --color-platform-doordash: #FF3008;
+  --color-platform-ubereats: #06C167;
+  --color-platform-instacart: #43B02A;
+  --color-platform-amazon: #FF9900;
+  --color-platform-walmart: #0071DC;
+  --color-platform-shipt: #00A859;
+  --color-platform-costco: #E31837;
+  --color-platform-samsclub: #0067A0;
+  --color-platform-totalwine: #6D2C41;
+  --color-platform-drizly: #6B46C1;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  /* Animation */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+}
+
+/* Theme Variables - Light Mode */
+:root {
+  /* Brand */
+  --dd-navy: #1E293B;
+  --dd-cyan: #06B6D4;
+  --dd-green: #10B981;
+  --dd-amber: #F59E0B;
+  --dd-red: #EF4444;
+
+  /* Background */
+  --dd-bg-primary: #FFFFFF;
+  --dd-bg-secondary: #F8FAFC;
+  --dd-bg-tertiary: #F1F5F9;
+  --dd-bg-card: #FFFFFF;
+
+  /* Text */
+  --dd-text-primary: #1E293B;
+  --dd-text-secondary: #334155;
+  --dd-text-tertiary: #64748B;
+  --dd-text-muted: #94A3B8;
+
+  /* Borders */
+  --dd-border: #E2E8F0;
+  --dd-border-secondary: #CBD5E1;
+
+  /* Shadows */
+  --dd-shadow: rgba(0, 0, 0, 0.1);
+
+  /* shadcn/ui Variables */
+  --background: 0 0% 100%;
+  --foreground: 215 28% 17%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 28% 17%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 28% 17%;
+  --primary: 189 94% 43%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 215 28% 17%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 215 28% 17%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 189 94% 43%;
+  --radius: 12px;
+}
+
+/* Theme Variables - Dark Mode */
+.dark {
+  /* Background */
+  --dd-bg-primary: #0F172A;
+  --dd-bg-secondary: #1E293B;
+  --dd-bg-tertiary: #334155;
+  --dd-bg-card: #1E293B;
+
+  /* Text */
+  --dd-text-primary: #F8FAFC;
+  --dd-text-secondary: #E2E8F0;
+  --dd-text-tertiary: #94A3B8;
+  --dd-text-muted: #64748B;
+
+  /* Borders */
+  --dd-border: #334155;
+  --dd-border-secondary: #475569;
+
+  /* Shadows */
+  --dd-shadow: rgba(0, 0, 0, 0.3);
+
+  /* shadcn/ui Variables */
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --card: 215 28% 17%;
+  --card-foreground: 210 40% 98%;
+  --popover: 215 28% 17%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 189 94% 43%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 25% 27%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 215 25% 27%;
+  --muted-foreground: 215 16% 65%;
+  --accent: 215 25% 27%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 25% 27%;
+  --input: 215 25% 27%;
+  --ring: 189 94% 43%;
+}
+
+/* Base Styles */
+@layer base {
+  * {
+    @apply border-[var(--dd-border)];
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[var(--dd-bg-secondary)] text-[var(--dd-text-primary)] antialiased;
+    font-family: var(--font-sans);
+  }
+
+  /* Focus visible styles */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-cyan;
+  }
+}
+
+/* Component Styles */
+@layer components {
+  /* Delivery Card */
+  .delivery-card {
+    @apply bg-[var(--dd-bg-card)] border border-[var(--dd-border)] rounded-xl shadow-md;
+    @apply transition-all duration-150 ease-out;
+  }
+
+  .delivery-card:hover {
+    @apply -translate-y-0.5 shadow-lg border-[var(--dd-border-secondary)];
+  }
+
+  /* Platform Badge */
+  .platform-badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  /* Map Container */
+  .map-container {
+    @apply w-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-700;
+    aspect-ratio: 16 / 10;
+  }
+
+  /* ETA Display */
+  .eta-display {
+    @apply text-2xl font-bold tabular-nums text-[var(--dd-text-primary)];
+  }
+
+  .eta-arriving {
+    @apply text-brand-cyan animate-pulse;
+  }
+
+  .eta-delivered {
+    @apply text-success;
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Theme transition */
+html.transitioning * {
+  transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out,
+    color 200ms ease-in-out !important;
+}
