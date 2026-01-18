@@ -100,6 +100,9 @@ export const ablyChannels = {
   /** User's connection status updates */
   userConnections: (userId: string) => `user:${userId}:connections`,
 
+  /** User's notification updates */
+  userNotifications: (userId: string) => `user:${userId}:notifications`,
+
   /** Delivery location updates (high frequency) */
   deliveryLocation: (deliveryId: string) => `delivery:${deliveryId}:location`,
 
@@ -158,6 +161,22 @@ export async function publishConnectionStatus(
   status: { platform: string; status: string; message?: string }
 ): Promise<boolean> {
   return publishToChannel(ablyChannels.userConnections(userId), 'connection_status', status);
+}
+
+/**
+ * Publish a notification to user
+ */
+export async function publishNotification(
+  userId: string,
+  notification: {
+    type: string;
+    title: string;
+    body: string;
+    data?: Record<string, unknown>;
+    timestamp: string;
+  }
+): Promise<boolean> {
+  return publishToChannel(ablyChannels.userNotifications(userId), 'notification', notification);
 }
 
 /**

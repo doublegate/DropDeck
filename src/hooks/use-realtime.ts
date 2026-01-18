@@ -30,6 +30,8 @@ interface UseRealTimeOptions {
   onStateChange?: (state: ConnectionState) => void;
   /** Enable debug logging */
   debug?: boolean;
+  /** Enable/disable the hook (default: true) */
+  enabled?: boolean;
 }
 
 /**
@@ -37,8 +39,15 @@ interface UseRealTimeOptions {
  * Manages Ably connection and event subscriptions
  */
 export function useRealTimeUpdates(options: UseRealTimeOptions = {}) {
-  const { userId, onDeliveryUpdate, onLocationUpdate, onConnectionStatus, onStateChange, debug } =
-    options;
+  const {
+    userId,
+    onDeliveryUpdate,
+    onLocationUpdate,
+    onConnectionStatus,
+    onStateChange,
+    debug,
+    enabled = true,
+  } = options;
 
   const [connectionState, setConnectionState] = useState<ConnectionState>('disconnected');
   const [isOnline, setIsOnline] = useState(true);
@@ -143,6 +152,11 @@ export function useRealTimeUpdates(options: UseRealTimeOptions = {}) {
    * Initialize Ably client
    */
   useEffect(() => {
+    if (!enabled) {
+      log('Hook disabled, skipping initialization');
+      return;
+    }
+
     if (!userId) {
       log('No userId, skipping initialization');
       return;
@@ -202,7 +216,7 @@ export function useRealTimeUpdates(options: UseRealTimeOptions = {}) {
       client.close();
       clientRef.current = null;
     };
-  }, [userId, subscribe, updateState, log]);
+  }, [userId, subscribe, updateState, log, enabled]);
 
   /**
    * Handle online/offline status

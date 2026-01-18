@@ -7,6 +7,106 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-01-17
+
+### Added
+
+#### Phase 4: Real-Time Features Complete
+
+**Sprint 4.1: Live Tracking Components**
+- `DeliveryMarker` component with platform-branded icons (32x32px)
+- Smooth 60fps marker animation using `requestAnimationFrame` and easeOutCubic interpolation
+- `DestinationMarker` component with address and delivery instructions
+- `RouteLine` component with animated route lines and platform-specific colors
+- `ConnectionStatusIndicator` for real-time connection status display
+- `LiveTrackingMap` with multi-delivery support and auto-fit bounds
+- Marker clustering support for multiple simultaneous deliveries
+
+**Sprint 4.2: ETA System**
+- ETA calculation service (`src/lib/services/eta.ts`) with:
+  - Platform ETA aggregation and normalization
+  - Confidence scoring (high/medium/low based on accuracy history)
+  - Traffic condition adjustments
+  - Historical accuracy tracking
+- `ETADisplay` component with animated countdown (24px bold, tabular-nums)
+- `ETADisplayCompact` for card integration
+- `ETATimeline` visual progression with milestone highlighting
+- Pulse animation for "arriving soon" state (Cyan glow)
+
+**Sprint 4.3: Notifications System**
+- In-app notification infrastructure via Ably WebSockets
+- Notification event schema with Zod validation
+- `useNotifications` hook for real-time notification subscriptions
+- `NotificationBell` component with unread count badge
+- `NotificationList` with date grouping and delivery grouping
+- `NotificationCenter` for full notification management
+- `NotificationPreferences` UI with:
+  - Push notification toggle
+  - Per-platform notification settings
+  - Per-event-type preferences
+  - Quiet hours configuration
+- Notification types: `DELIVERY_STATUS_CHANGE`, `DRIVER_ASSIGNED`, `OUT_FOR_DELIVERY`, `ARRIVING_SOON`, `DELIVERED`, `DELAY_DETECTED`
+
+**Sprint 4.4: Unified Dashboard**
+- Zustand dashboard store (`src/stores/dashboard-store.ts`) with:
+  - Delivery state management (CRUD operations)
+  - Filter state (platforms, statuses, search query)
+  - Sort options (ETA, status, platform, order time)
+  - View settings (grid/list/map mode)
+  - LocalStorage persistence for user preferences
+  - Computed selectors for filtered/sorted deliveries
+- `DeliveryCard` component (Design System compliant):
+  - Platform badge with brand colors
+  - Status badge with semantic colors
+  - Driver info, ETA display, progress indicator
+  - Hover animation (-translate-y-0.5, increased shadow)
+  - Skeleton loader for loading states
+- `DeliveryGrid` responsive grid (1/2/3/4 columns)
+- `DeliveryFilters` with:
+  - Platform multi-select with counts
+  - Status filter (Active/Completed/Cancelled)
+  - Sort dropdown with order toggle
+  - View mode toggle (grid/list)
+  - Active filter chips with clear functionality
+- `DeliveryStats` dashboard stats (active, arriving soon, delivered today, weekly total)
+- Empty states for no deliveries, no platforms, no filter results
+- Real-time card updates via tRPC subscriptions
+- Collapsible map section integration
+
+**Dashboard Page Updates**
+- Updated `src/app/(dashboard)/dashboard/page.tsx` with full Zustand integration
+- Real-time updates via `useRealTimeUpdates` hook with conditional enabling
+- Connection status indicator in header
+- Responsive layout with Design System breakpoints
+
+### Changed
+- Extended `use-realtime.ts` hook with `enabled` option for conditional subscriptions
+- Extended `LiveTrackingMap` to accept external deliveries prop
+- Added `autoFitBounds` option to map component
+- Updated Ably client with `userNotifications` channel and `publishNotification` helper
+- Extended realtime events schema with notification event types
+
+### Technical Details
+- **21 new files created** across 5 directories
+- **8 files modified** (existing infrastructure)
+- **+4,300 lines of code**
+- **Total codebase: 131 files, ~20,600 lines**
+- TypeScript compilation: PASS
+- Biome lint: PASS (4 warnings for intentional non-null assertions)
+
+### Component Architecture
+
+| Category | Components |
+|----------|------------|
+| Map | DeliveryMarker, DestinationMarker, RouteLine, ConnectionStatus, LiveTrackingMap |
+| ETA | ETADisplay, ETADisplayCompact, ETATimeline |
+| Notifications | NotificationBell, NotificationList, NotificationCenter, NotificationPreferences |
+| Dashboard | DeliveryCard, DeliveryGrid, DeliveryFilters, DeliveryStats |
+| Stores | dashboard-store (Zustand with persistence) |
+| Services | eta.ts (calculation engine) |
+
+---
+
 ## [0.3.0] - 2026-01-17
 
 ### Added
@@ -295,7 +395,8 @@ This changelog will be updated as development progresses through each phase.
 
 **Target Launch:** Q2 2026
 
-[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/doublegate/DropDeck/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/doublegate/DropDeck/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/doublegate/DropDeck/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/doublegate/DropDeck/releases/tag/v0.1.0

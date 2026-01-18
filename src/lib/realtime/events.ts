@@ -81,13 +81,47 @@ export const systemStatusSchema = z.object({
 export type SystemStatusEvent = z.infer<typeof systemStatusSchema>;
 
 /**
+ * Notification event schema
+ */
+export const notificationEventSchema = z.object({
+  type: z.literal('notification'),
+  timestamp: z.string().datetime(),
+  payload: z.object({
+    id: z.string().optional(),
+    notificationType: z.enum([
+      'delivery_status_change',
+      'driver_assigned',
+      'out_for_delivery',
+      'arriving_soon',
+      'delivered',
+      'delay_detected',
+      'platform_connected',
+      'platform_disconnected',
+    ]),
+    title: z.string(),
+    body: z.string(),
+    data: z
+      .object({
+        deliveryId: z.string().optional(),
+        platform: z.string().optional(),
+        status: z.string().optional(),
+        actionUrl: z.string().optional(),
+      })
+      .optional(),
+  }),
+});
+
+export type NotificationEvent = z.infer<typeof notificationEventSchema>;
+
+/**
  * Union of all event types
  */
 export type RealtimeEvent =
   | DeliveryUpdateEvent
   | LocationUpdateEvent
   | ConnectionStatusEvent
-  | SystemStatusEvent;
+  | SystemStatusEvent
+  | NotificationEvent;
 
 /**
  * Event type guard
@@ -108,6 +142,10 @@ export function isSystemStatusEvent(event: RealtimeEvent): event is SystemStatus
   return event.type === 'system_status';
 }
 
+export function isNotificationEvent(event: RealtimeEvent): event is NotificationEvent {
+  return event.type === 'notification';
+}
+
 /**
  * Validate an event against its schema
  */
@@ -120,6 +158,7 @@ export function validateEvent(
     locationUpdateSchema,
     connectionStatusSchema,
     systemStatusSchema,
+    notificationEventSchema,
   ];
 
   for (const schema of schemas) {
