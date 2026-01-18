@@ -1,16 +1,16 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import type maplibregl from 'maplibre-gl';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MapContainer } from '@/components/maps/MapContainer';
+import { type ConnectionState, useRealTimeUpdates } from '@/hooks/use-realtime';
+import { calculateBounds } from '@/lib/maps/config';
+import type { DeliveryUpdateEvent, LocationUpdateEvent } from '@/lib/realtime/events';
+import type { DriverLocation, UnifiedDelivery } from '@/types/delivery';
+import { ConnectionStatusIndicator } from './connection-status-indicator';
 import { DeliveryMarker } from './delivery-marker';
 import { DestinationMarker } from './destination-marker';
 import { RouteLine } from './route-line';
-import { ConnectionStatusIndicator } from './connection-status-indicator';
-import { useRealTimeUpdates, type ConnectionState } from '@/hooks/use-realtime';
-import { calculateBounds } from '@/lib/maps/config';
-import type { UnifiedDelivery, DriverLocation } from '@/types/delivery';
-import type { LocationUpdateEvent, DeliveryUpdateEvent } from '@/lib/realtime/events';
 
 /**
  * LiveTrackingMap props

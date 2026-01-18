@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import type { UnifiedDelivery, DeliveryStatus } from '@/types/delivery';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
 import type { Platform } from '@/types/platform';
 
 /**

@@ -5,8 +5,8 @@
 
 export { ErrorBoundary, withErrorBoundary } from './error-boundary';
 export {
-  ErrorMessage,
-  InlineError,
   ErrorEmptyState,
   ErrorList,
+  ErrorMessage,
+  InlineError,
 } from './error-message';

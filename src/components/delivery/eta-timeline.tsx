@@ -1,21 +1,21 @@
 'use client';
 
-import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
-  ClipboardCheck,
-  ChefHat,
-  UserCheck,
+  AlertTriangle,
   Car,
-  Store,
-  Truck,
+  ChefHat,
+  ClipboardCheck,
   MapPin,
   PackageCheck,
+  Store,
+  Truck,
+  UserCheck,
   XCircle,
-  AlertTriangle,
 } from 'lucide-react';
+import { useMemo } from 'react';
 import { cn } from '@/lib/utils';
-import type { UnifiedDelivery, DeliveryStatus } from '@/types/delivery';
+import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
 
 /**
  * ETATimeline props

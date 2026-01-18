@@ -1,18 +1,18 @@
 import * as jose from 'jose';
-import { createPlatformRateLimiter, checkRateLimit } from '@/lib/ratelimit';
+import { checkRateLimit, createPlatformRateLimiter } from '@/lib/ratelimit';
 import {
   PlatformAuthError,
+  PlatformDataError,
+  PlatformNetworkError,
   PlatformRateLimitError,
   PlatformUnavailableError,
-  PlatformNetworkError,
-  PlatformDataError,
 } from '../errors';
 import { withRetry } from '../utils';
 import {
-  DoorDashDeliverySchema,
+  type DoorDashDeliveriesResponse,
   DoorDashDeliveriesResponseSchema,
   type DoorDashDelivery,
-  type DoorDashDeliveriesResponse,
+  DoorDashDeliverySchema,
 } from './types';
 
 /**

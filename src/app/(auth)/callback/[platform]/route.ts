@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getAdapterAsync } from '@/lib/adapters/registry';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { platformConnections } from '@/lib/db/schema';
-import { getAdapterAsync } from '@/lib/adapters/registry';
 import { encryptToken } from '@/lib/encryption/tokens';
 import { redis } from '@/lib/realtime/redis';
 import type { Platform } from '@/types/platform';

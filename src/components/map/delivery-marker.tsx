@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useMemo, useCallback, useState } from 'react';
 import maplibregl from 'maplibre-gl';
-import { getPlatformMarkerColor, ANIMATION } from '@/lib/maps/config';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { interpolateLocation } from '@/lib/adapters/utils';
+import { ANIMATION, getPlatformMarkerColor } from '@/lib/maps/config';
+import type { DeliveryStatus, DriverLocation } from '@/types/delivery';
 import type { Platform } from '@/types/platform';
-import type { DriverLocation, DeliveryStatus } from '@/types/delivery';
 
 /**
  * DeliveryMarker props

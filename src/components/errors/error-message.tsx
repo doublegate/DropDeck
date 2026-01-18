@@ -6,12 +6,12 @@
  * Sprint 5.5 - Error Handling and Offline Support
  */
 
-import { memo, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { getErrorSeverity, getUserFriendlyMessage, isRetryableError } from '@/lib/errors';
+import { memo, type ReactNode } from 'react';
 import { useReducedMotion } from '@/lib/accessibility';
 import { getAccessibleVariants, slideUpVariants } from '@/lib/animations/variants';
+import { getErrorSeverity, getUserFriendlyMessage, isRetryableError } from '@/lib/errors';
+import { cn } from '@/lib/utils';
 
 /**
  * Error severity types

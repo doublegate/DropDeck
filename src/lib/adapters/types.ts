@@ -1,5 +1,5 @@
-import type { Platform } from '@/types/platform';
 import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
+import type { Platform } from '@/types/platform';
 
 /**
  * OAuth token set returned from token exchange

@@ -4,60 +4,56 @@
 
 // Base classes
 export { PlatformAdapter, SessionBasedAdapter } from './base';
-
-// Types
-export type {
-  TokenSet,
-  AdapterConnection,
-  WebhookPayload,
-  AdapterMetadata,
-  AdapterCapabilities,
-  AdapterFetchOptions,
-  StatusMapping,
-  PollingStatus,
-  BatchDeliveryResult,
-  AdapterErrorCode,
-} from './types';
-
 // Errors
 export {
-  PlatformAdapterError,
-  PlatformAuthError,
-  PlatformRateLimitError,
-  PlatformUnavailableError,
-  PlatformDataError,
-  PlatformNetworkError,
-  WebhookValidationError,
+  getRetryDelay,
   isPlatformAdapterError,
   isRetryableError,
-  getRetryDelay,
+  PlatformAdapterError,
+  PlatformAuthError,
+  PlatformDataError,
+  PlatformNetworkError,
+  PlatformRateLimitError,
+  PlatformUnavailableError,
+  WebhookValidationError,
 } from './errors';
-
 // Registry
 export {
   adapterRegistry,
-  registerAdapter,
   getAdapter,
   getAdapterAsync,
   getAllAdapters,
   hasAdapter,
+  registerAdapter,
 } from './registry';
-
 // Status mapping
-export { mapPlatformStatus, getStatusMap } from './status-map';
+export { getStatusMap, mapPlatformStatus } from './status-map';
+// Types
+export type {
+  AdapterCapabilities,
+  AdapterConnection,
+  AdapterErrorCode,
+  AdapterFetchOptions,
+  AdapterMetadata,
+  BatchDeliveryResult,
+  PollingStatus,
+  StatusMapping,
+  TokenSet,
+  WebhookPayload,
+} from './types';
 
 // Utilities
 export {
   calculateDistance,
   calculateEtaFromDistance,
   calculateHeading,
-  interpolateLocation,
-  withRetry,
-  sleep,
-  maskPhoneNumber,
-  maskLicensePlate,
   formatCurrency,
   formatEta,
-  parseDate,
   generateId,
+  interpolateLocation,
+  maskLicensePlate,
+  maskPhoneNumber,
+  parseDate,
+  sleep,
+  withRetry,
 } from './utils';

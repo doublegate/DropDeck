@@ -1,24 +1,24 @@
 'use client';
 
-import { useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
+  AlertTriangle,
   Bell,
   BellOff,
   Check,
   CheckCheck,
-  Trash2,
-  Package,
-  Truck,
-  UserCheck,
-  AlertTriangle,
   Link2,
   Link2Off,
+  Package,
+  Trash2,
+  Truck,
+  UserCheck,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { NotificationItem } from '@/hooks/use-notifications';
+import { cn } from '@/lib/utils';
 
 /**
  * NotificationList props

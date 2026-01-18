@@ -6,7 +6,7 @@
  * Sprint 5.5 - Error Handling and Offline Support
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Online status result

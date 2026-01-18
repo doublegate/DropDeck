@@ -3,7 +3,7 @@
  * Sprint 5.4 - Accessibility Features
  */
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Keyboard key codes for navigation

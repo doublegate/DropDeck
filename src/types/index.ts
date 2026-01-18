@@ -1,3 +1,3 @@
 export * from './delivery';
-export * from './platform';
 export * from './events';
+export * from './platform';

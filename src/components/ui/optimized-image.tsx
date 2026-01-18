@@ -5,8 +5,8 @@
  * Sprint 5.3 - Performance Optimizations
  */
 
-import { useState, useEffect, useRef, memo } from 'react';
 import Image, { type ImageProps } from 'next/image';
+import { memo, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 /**

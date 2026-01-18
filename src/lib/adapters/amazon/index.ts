@@ -1,10 +1,10 @@
+import type { DeliveryStatus, DriverLocation, OrderItem, UnifiedDelivery } from '@/types/delivery';
 import { PlatformAdapter } from '../base';
-import type { AdapterConnection, AdapterMetadata, TokenSet } from '../types';
-import type { DeliveryStatus, UnifiedDelivery, DriverLocation, OrderItem } from '@/types/delivery';
-import { getAmazonClient, type AmazonApiClient } from './client';
 import { amazonStatusMap } from '../status-map';
+import type { AdapterConnection, AdapterMetadata, TokenSet } from '../types';
 import { parseDate } from '../utils';
-import type { AmazonOrder, AmazonShipment, AmazonOrderType } from './types';
+import { type AmazonApiClient, getAmazonClient } from './client';
+import type { AmazonOrder, AmazonOrderType, AmazonShipment } from './types';
 import { AMAZON_CARRIERS } from './types';
 
 /**

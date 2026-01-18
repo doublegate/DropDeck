@@ -6,7 +6,7 @@
  * Sprint 5.4 - Accessibility Features
  */
 
-import { memo, useRef, useEffect, type ReactNode } from 'react';
+import { memo, type ReactNode, useEffect, useRef } from 'react';
 import { useFocusTrap } from '@/lib/accessibility';
 
 /**

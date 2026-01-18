@@ -1,6 +1,6 @@
-import type { UnifiedDelivery, DeliveryStatus } from '@/types/delivery';
-import type { Platform } from '@/types/platform';
 import { calculateDistance, calculateEtaFromDistance } from '@/lib/adapters/utils';
+import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
+import type { Platform } from '@/types/platform';
 
 /**
  * ETA confidence levels

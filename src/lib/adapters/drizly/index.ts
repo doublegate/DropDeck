@@ -1,16 +1,16 @@
 import { z } from 'zod';
+import { checkRateLimit, createPlatformRateLimiter } from '@/lib/ratelimit';
+import type { DeliveryStatus, DriverLocation, OrderItem, UnifiedDelivery } from '@/types/delivery';
 import { SessionBasedAdapter } from '../base';
-import type { AdapterConnection, AdapterMetadata, TokenSet } from '../types';
-import type { DeliveryStatus, UnifiedDelivery, DriverLocation, OrderItem } from '@/types/delivery';
-import { drizlyStatusMap } from '../status-map';
-import { maskPhoneNumber, parseDate, withRetry } from '../utils';
-import { createPlatformRateLimiter, checkRateLimit } from '@/lib/ratelimit';
 import {
   PlatformAuthError,
+  PlatformNetworkError,
   PlatformRateLimitError,
   PlatformUnavailableError,
-  PlatformNetworkError,
 } from '../errors';
+import { drizlyStatusMap } from '../status-map';
+import type { AdapterConnection, AdapterMetadata, TokenSet } from '../types';
+import { maskPhoneNumber, parseDate, withRetry } from '../utils';
 
 // ============================================
 // Drizly Types

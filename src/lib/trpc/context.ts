@@ -1,5 +1,5 @@
-import type { Session } from 'next-auth';
 import type { Redis } from '@upstash/redis';
+import type { Session } from 'next-auth';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { redis } from '@/lib/realtime/redis';

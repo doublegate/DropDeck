@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import type { Platform } from '@/types/platform';
 import type { DeliveryStatus, DriverLocation } from '@/types/delivery';
+import type { Platform } from '@/types/platform';
 
 /**
  * Event schemas and types for real-time updates

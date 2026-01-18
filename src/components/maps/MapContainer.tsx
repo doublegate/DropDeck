@@ -1,18 +1,18 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
 import maplibregl from 'maplibre-gl';
+import { useEffect, useRef, useState } from 'react';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useTheme } from 'next-themes';
-import { cn } from '@/lib/utils';
 import {
-  getMapStyle,
+  ANIMATION,
   DEFAULT_CENTER,
   DEFAULT_ZOOM,
-  ANIMATION,
+  getMapStyle,
   MAP_PADDING,
   type MapBounds,
 } from '@/lib/maps/config';
+import { cn } from '@/lib/utils';
 
 /**
  * MapContainer props

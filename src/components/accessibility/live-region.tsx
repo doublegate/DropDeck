@@ -6,7 +6,7 @@
  * Sprint 5.4 - Accessibility Features
  */
 
-import { memo, useEffect, useState, type ReactNode } from 'react';
+import { memo, type ReactNode, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 /**

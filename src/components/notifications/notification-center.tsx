@@ -1,35 +1,35 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
+  AlertTriangle,
   Bell,
   BellOff,
   Check,
   CheckCheck,
-  Trash2,
+  ChevronDown,
   Filter,
-  Package,
-  Truck,
-  UserCheck,
-  AlertTriangle,
   Link2,
   Link2Off,
-  ChevronDown,
+  Package,
+  Trash2,
+  Truck,
+  UserCheck,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuCheckboxItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { NotificationItem } from '@/hooks/use-notifications';
+import { cn } from '@/lib/utils';
 
 /**
  * Notification types for filtering

@@ -1,19 +1,19 @@
-import type { Platform } from '@/types/platform';
 import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
-import type {
-  TokenSet,
-  AdapterConnection,
-  WebhookPayload,
-  AdapterMetadata,
-  AdapterCapabilities,
-  AdapterFetchOptions,
-} from './types';
+import type { Platform } from '@/types/platform';
 import {
   PlatformAuthError,
+  PlatformNetworkError,
   PlatformRateLimitError,
   PlatformUnavailableError,
-  PlatformNetworkError,
 } from './errors';
+import type {
+  AdapterCapabilities,
+  AdapterConnection,
+  AdapterFetchOptions,
+  AdapterMetadata,
+  TokenSet,
+  WebhookPayload,
+} from './types';
 
 /**
  * Default fetch options

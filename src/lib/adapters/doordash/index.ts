@@ -1,14 +1,14 @@
 import crypto from 'node:crypto';
+import type { DeliveryStatus, DriverLocation, OrderItem, UnifiedDelivery } from '@/types/delivery';
 import { PlatformAdapter } from '../base';
-import type { AdapterConnection, AdapterMetadata, WebhookPayload } from '../types';
-import type { DeliveryStatus, UnifiedDelivery, DriverLocation, OrderItem } from '@/types/delivery';
-import { getDoorDashClient, type DoorDashApiClient } from './client';
 import { doordashStatusMap } from '../status-map';
-import { maskPhoneNumber, maskLicensePlate, parseDate } from '../utils';
+import type { AdapterConnection, AdapterMetadata, WebhookPayload } from '../types';
+import { maskLicensePlate, maskPhoneNumber, parseDate } from '../utils';
+import { type DoorDashApiClient, getDoorDashClient } from './client';
 import {
-  DoorDashWebhookPayloadSchema,
   type DoorDashDelivery,
   type DoorDashWebhookPayload,
+  DoorDashWebhookPayloadSchema,
 } from './types';
 
 /**

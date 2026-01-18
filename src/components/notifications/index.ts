@@ -3,14 +3,11 @@
  * UI components for the notification system
  */
 
-export { NotificationBell } from './notification-bell';
 export type { NotificationBellProps } from './notification-bell';
-
-export { NotificationList } from './notification-list';
-export type { NotificationListProps } from './notification-list';
-
-export { NotificationCenter } from './notification-center';
+export { NotificationBell } from './notification-bell';
 export type { NotificationCenterProps } from './notification-center';
-
-export { NotificationPreferences } from './notification-preferences';
+export { NotificationCenter } from './notification-center';
+export type { NotificationListProps } from './notification-list';
+export { NotificationList } from './notification-list';
 export type { NotificationPreferencesProps, NotificationPrefs } from './notification-preferences';
+export { NotificationPreferences } from './notification-preferences';

@@ -1,6 +1,6 @@
+import type { DriverLocation, UnifiedDelivery } from '@/types/delivery';
+import { ablyChannels, publishToChannel } from './ably';
 import { redis, channels as redisChannels } from './redis';
-import { publishToChannel, ablyChannels } from './ably';
-import type { UnifiedDelivery, DriverLocation } from '@/types/delivery';
 
 /**
  * Pub/Sub system for DropDeck

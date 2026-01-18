@@ -1,14 +1,14 @@
 import crypto from 'node:crypto';
+import type { DeliveryStatus, DriverLocation, OrderItem, UnifiedDelivery } from '@/types/delivery';
 import { PlatformAdapter } from '../base';
-import type { AdapterConnection, AdapterMetadata, TokenSet, WebhookPayload } from '../types';
-import type { DeliveryStatus, UnifiedDelivery, DriverLocation, OrderItem } from '@/types/delivery';
-import { getInstacartClient, type InstacartApiClient } from './client';
 import { instacartStatusMap } from '../status-map';
+import type { AdapterConnection, AdapterMetadata, TokenSet, WebhookPayload } from '../types';
 import { maskPhoneNumber, parseDate } from '../utils';
+import { getInstacartClient, type InstacartApiClient } from './client';
 import {
-  InstacartWebhookPayloadSchema,
   type InstacartOrder,
   type InstacartWebhookPayload,
+  InstacartWebhookPayloadSchema,
 } from './types';
 
 /**

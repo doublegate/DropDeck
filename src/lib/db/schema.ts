@@ -182,6 +182,9 @@ export const userPreferences = pgTable('user_preferences', {
   manualPlatformOrder: jsonb('manual_platform_order').$type<string[] | null>(),
   notificationsEnabled: boolean('notifications_enabled').default(true).notNull(),
   notificationSettings: jsonb('notification_settings').$type<NotificationSettings | null>(),
+  // Beta user identification
+  isBeta: boolean('is_beta').default(false).notNull(),
+  betaJoinedAt: timestamp('beta_joined_at', { mode: 'date' }),
   updatedAt: timestamp('updated_at', { mode: 'date' })
     .defaultNow()
     .notNull()
@@ -354,6 +357,9 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   sessions: many(sessions),
   pushSubscriptions: many(pushSubscriptions),
   notifications: many(notifications),
+  createdInviteCodes: many(inviteCodes),
+  inviteRedemption: one(inviteRedemptions),
+  feedback: many(feedback),
 }));
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -415,6 +421,152 @@ export const notificationsRelations = relations(notifications, ({ one }) => ({
 export const notificationPreferencesRelations = relations(notificationPreferences, ({ one }) => ({
   user: one(users, {
     fields: [notificationPreferences.userId],
+    references: [users.id],
+  }),
+}));
+
+// ============================================
+// INVITE CODES TABLE (Beta System)
+// ============================================
+
+export const inviteCodeStatusEnum = pgEnum('invite_code_status', [
+  'active',
+  'exhausted',
+  'expired',
+  'revoked',
+]);
+
+export const inviteCodes = pgTable(
+  'invite_codes',
+  {
+    id: text('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    code: text('code').notNull(),
+    createdBy: text('created_by').references(() => users.id, { onDelete: 'set null' }),
+    maxRedemptions: integer('max_redemptions').default(1).notNull(),
+    redemptionCount: integer('redemption_count').default(0).notNull(),
+    status: inviteCodeStatusEnum('status').default('active').notNull(),
+    note: text('note'), // Admin note about this code
+    expiresAt: timestamp('expires_at', { mode: 'date' }),
+    createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'date' })
+      .defaultNow()
+      .notNull()
+      .$onUpdateFn(() => new Date()),
+  },
+  (table) => [
+    uniqueIndex('invite_codes_code_idx').on(table.code),
+    index('invite_codes_status_idx').on(table.status),
+    index('invite_codes_created_by_idx').on(table.createdBy),
+  ]
+);
+
+// ============================================
+// INVITE REDEMPTIONS TABLE (Beta System)
+// ============================================
+
+export const inviteRedemptions = pgTable(
+  'invite_redemptions',
+  {
+    id: text('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    inviteCodeId: text('invite_code_id')
+      .notNull()
+      .references(() => inviteCodes.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    redeemedAt: timestamp('redeemed_at', { mode: 'date' }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex('invite_redemptions_user_idx').on(table.userId),
+    index('invite_redemptions_code_idx').on(table.inviteCodeId),
+  ]
+);
+
+// ============================================
+// FEEDBACK TABLE (Beta System)
+// ============================================
+
+export const feedbackCategoryEnum = pgEnum('feedback_category', [
+  'bug',
+  'feature_request',
+  'ux_improvement',
+  'platform_issue',
+  'performance',
+  'other',
+]);
+
+export const feedbackStatusEnum = pgEnum('feedback_status', [
+  'new',
+  'acknowledged',
+  'in_progress',
+  'resolved',
+  'wont_fix',
+]);
+
+export const feedback = pgTable(
+  'feedback',
+  {
+    id: text('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    category: feedbackCategoryEnum('category').notNull(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    metadata: jsonb('metadata').$type<{
+      url?: string;
+      platform?: string;
+      userAgent?: string;
+      screenshot?: string;
+    } | null>(),
+    status: feedbackStatusEnum('status').default('new').notNull(),
+    adminNotes: text('admin_notes'),
+    createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'date' })
+      .defaultNow()
+      .notNull()
+      .$onUpdateFn(() => new Date()),
+  },
+  (table) => [
+    index('feedback_user_idx').on(table.userId),
+    index('feedback_category_idx').on(table.category),
+    index('feedback_status_idx').on(table.status),
+    index('feedback_created_idx').on(table.createdAt),
+  ]
+);
+
+// ============================================
+// BETA RELATIONS
+// ============================================
+
+export const inviteCodesRelations = relations(inviteCodes, ({ one, many }) => ({
+  createdByUser: one(users, {
+    fields: [inviteCodes.createdBy],
+    references: [users.id],
+  }),
+  redemptions: many(inviteRedemptions),
+}));
+
+export const inviteRedemptionsRelations = relations(inviteRedemptions, ({ one }) => ({
+  inviteCode: one(inviteCodes, {
+    fields: [inviteRedemptions.inviteCodeId],
+    references: [inviteCodes.id],
+  }),
+  user: one(users, {
+    fields: [inviteRedemptions.userId],
+    references: [users.id],
+  }),
+}));
+
+export const feedbackRelations = relations(feedback, ({ one }) => ({
+  user: one(users, {
+    fields: [feedback.userId],
     references: [users.id],
   }),
 }));

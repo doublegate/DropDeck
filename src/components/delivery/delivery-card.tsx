@@ -1,24 +1,24 @@
 'use client';
 
-import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Package,
-  ChefHat,
-  Truck,
-  MapPin,
-  CheckCircle2,
-  XCircle,
   AlertTriangle,
+  CheckCircle2,
+  ChefHat,
   ChevronRight,
-  User,
+  MapPin,
   Navigation,
+  Package,
+  Truck,
+  User,
+  XCircle,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { ETADisplayCompact } from './eta-display';
+import { cn } from '@/lib/utils';
+import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
 import { PLATFORM_CONFIGS, type Platform } from '@/types/platform';
-import type { UnifiedDelivery, DeliveryStatus } from '@/types/delivery';
+import { ETADisplayCompact } from './eta-display';
 
 /**
  * DeliveryCard props

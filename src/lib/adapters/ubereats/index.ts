@@ -1,14 +1,14 @@
 import crypto from 'node:crypto';
+import type { DeliveryStatus, DriverLocation, OrderItem, UnifiedDelivery } from '@/types/delivery';
 import { PlatformAdapter } from '../base';
-import type { AdapterConnection, AdapterMetadata, TokenSet, WebhookPayload } from '../types';
-import type { DeliveryStatus, UnifiedDelivery, DriverLocation, OrderItem } from '@/types/delivery';
-import { getUberEatsClient, type UberEatsApiClient } from './client';
 import { ubereatsStatusMap } from '../status-map';
-import { maskPhoneNumber, maskLicensePlate, parseDate } from '../utils';
+import type { AdapterConnection, AdapterMetadata, TokenSet, WebhookPayload } from '../types';
+import { maskLicensePlate, maskPhoneNumber, parseDate } from '../utils';
+import { getUberEatsClient, type UberEatsApiClient } from './client';
 import {
-  UberEatsWebhookPayloadSchema,
   type UberEatsOrder,
   type UberEatsWebhookPayload,
+  UberEatsWebhookPayloadSchema,
 } from './types';
 
 /**

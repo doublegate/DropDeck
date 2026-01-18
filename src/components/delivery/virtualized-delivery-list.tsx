@@ -6,11 +6,11 @@
  * Sprint 5.3 - Performance Optimizations
  */
 
-import { useRef, useState, useEffect, useCallback, useMemo, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
 import type { UnifiedDelivery } from '@/types/delivery';
 import { DeliveryCard, DeliveryCardSkeleton } from './delivery-card';
-import { cn } from '@/lib/utils';
 
 /**
  * Props for VirtualizedDeliveryList

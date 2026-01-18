@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { Wifi, WifiOff, AlertCircle, Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
+import { AlertCircle, Loader2, Wifi, WifiOff } from 'lucide-react';
 import type { ConnectionState } from '@/hooks/use-realtime';
+import { cn } from '@/lib/utils';
 
 /**
  * ConnectionStatusIndicator props

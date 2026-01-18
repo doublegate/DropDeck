@@ -1,18 +1,18 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, AlertTriangle, CheckCircle2, TrendingDown, TrendingUp } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
+import { AlertTriangle, CheckCircle2, Clock, TrendingDown, TrendingUp } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   calculateETA,
+  type ETAConfidenceLevel,
+  type ETAResult,
   formatETADisplay,
   formatETARange,
   getConfidenceColor,
-  type ETAResult,
-  type ETAConfidenceLevel,
 } from '@/lib/services/eta';
-import type { UnifiedDelivery, DeliveryStatus } from '@/types/delivery';
+import { cn } from '@/lib/utils';
+import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
 
 /**
  * ETADisplay props

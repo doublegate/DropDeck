@@ -7,6 +7,154 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-01-17
+
+### Added
+
+#### Phase 6: Launch Complete
+
+**Sprint 6.1: Production Deployment**
+- Vercel deployment configuration (`vercel.json`) with:
+  - Function timeout optimization (10s API, 60s webhook)
+  - Security headers (CSP, HSTS, X-Frame-Options, referrer policy)
+  - Build caching and output configuration
+  - Region-specific deployment (iad1 primary)
+- Production environment validation (`src/lib/env/production.ts`):
+  - Zod schema for all required environment variables
+  - Categorized validation (database, auth, realtime, Sentry, feature flags)
+  - Runtime validation with detailed error messages
+- Health check endpoint (`/api/health`):
+  - Database connectivity verification
+  - Redis connection status
+  - Ably WebSocket health
+  - System metrics (memory, uptime)
+  - JSON response with service status
+- Pre-deployment verification script (`scripts/pre-deploy.ts`):
+  - Environment variable validation
+  - TypeScript compilation check
+  - Build verification
+  - Database migration status
+  - Security configuration audit
+
+**Sprint 6.2: Monitoring and Alerting**
+- Sentry integration for error tracking:
+  - Client configuration (`sentry.client.config.ts`) with replay integration
+  - Server configuration (`sentry.server.config.ts`) with profiling
+  - Edge configuration (`sentry.edge.config.ts`) for middleware
+  - 10% session replay sampling, 100% error replay
+- Structured logging system (`src/lib/monitoring/logger.ts`):
+  - JSON-formatted logs for production
+  - Log levels: debug, info, warn, error
+  - Request context (userId, requestId, path)
+  - Performance timing capture
+- Metrics collection (`src/lib/monitoring/metrics.ts`):
+  - API latency tracking by endpoint
+  - Platform sync success/failure rates
+  - WebSocket connection metrics
+  - Cache hit/miss ratios
+  - Counter, gauge, and histogram metric types
+- Performance monitoring (`src/lib/monitoring/performance.ts`):
+  - Web Vitals integration (LCP, FID, CLS, TTFB, INP)
+  - Custom performance marks and measures
+  - Resource timing collection
+  - Navigation timing analysis
+- Status indicator components:
+  - `StatusIndicator` - Color-coded status dot with labels
+  - `ServiceStatus` - Individual service health display
+  - `SystemStatus` - Aggregate system health dashboard
+
+**Sprint 6.3: Beta Testing Infrastructure**
+- Invite code system:
+  - Database schema: `invite_codes`, `invite_redemptions` tables
+  - Code generation with customizable length and prefix
+  - Usage limits and expiration dates
+  - Redemption tracking with user association
+- Invite API endpoints:
+  - `POST /api/invite/generate` - Create new invite codes
+  - `POST /api/invite/redeem` - Redeem invite code
+  - `GET /api/invite/validate` - Check code validity
+- Feedback collection system:
+  - Database schema: `feedback` table with categories and metadata
+  - `POST /api/feedback` - Submit user feedback
+  - Categories: bug, feature, improvement, other
+  - Optional screenshot attachment support
+- Beta UI components:
+  - `FeedbackWidget` - Floating feedback button with modal form
+  - `InviteCodeForm` - Code entry with validation
+  - `BetaBadge` - Visual beta indicator for header
+
+**Sprint 6.4: Documentation and Legal**
+- Help center pages (`src/app/(docs)/help/`):
+  - Getting started guide with step-by-step instructions
+  - FAQ page with common questions and answers
+  - Troubleshooting guide for common issues
+  - Platform-specific connection guides
+- Legal documentation (`src/app/(docs)/legal/`):
+  - Privacy Policy with GDPR/CCPA compliance
+  - Terms of Service with usage guidelines
+  - Cookie Policy with preference management
+  - Data Processing Agreement references
+- Documentation layout with navigation sidebar
+- Responsive design with mobile-optimized reading
+
+**Sprint 6.5: Launch Preparation**
+- Feature flag system (`src/lib/feature-flags/`):
+  - Configuration-based flag definitions
+  - Server-side flag evaluation with user context
+  - React hooks: `useFeatureFlag`, `useFeatureFlags`
+  - Percentage-based rollout support
+  - Environment-specific overrides
+- Launch components:
+  - `PreLaunchChecklist` - Interactive deployment checklist
+  - `LaunchCountdown` - Animated countdown timer
+  - Status tracking for all launch requirements
+- CI/CD workflow (`.github/workflows/ci.yml`):
+  - Multi-stage pipeline: lint, typecheck, test, build
+  - Matrix testing across Node versions
+  - Playwright E2E test integration
+  - Vercel deployment automation
+  - Environment-specific deployments (staging, production)
+  - Slack notification integration
+
+### Technical Details
+- **38 new files created** across deployment, monitoring, and feature directories
+- **81 files modified** (components, services, infrastructure)
+- **+5,860 lines of code**
+- **Total codebase: 206 files, ~35,460 lines**
+- TypeScript compilation: PASS
+- Biome lint: PASS (189 files checked)
+
+### Deployment Architecture
+
+| Component | Technology | Configuration |
+|-----------|------------|---------------|
+| Hosting | Vercel | Edge + Serverless |
+| Database | Neon PostgreSQL | Serverless, pooled connections |
+| Cache | Upstash Redis | Global replication |
+| WebSockets | Ably | Real-time pub/sub |
+| Monitoring | Sentry | Error tracking + profiling |
+| CI/CD | GitHub Actions | Multi-stage pipeline |
+
+### Monitoring Stack
+
+| Metric | Collection | Alerting |
+|--------|------------|----------|
+| Errors | Sentry SDK | Slack integration |
+| Performance | Web Vitals + custom | Threshold alerts |
+| Latency | Custom metrics | P95 monitoring |
+| Uptime | Health endpoint | External monitoring |
+
+### Feature Flag Configuration
+
+| Flag | Type | Default | Description |
+|------|------|---------|-------------|
+| `betaAccess` | boolean | false | Require invite code |
+| `newDashboard` | percentage | 0% | Dashboard redesign |
+| `debugMode` | boolean | false | Debug panel access |
+| `maintenanceMode` | boolean | false | System maintenance |
+
+---
+
 ## [0.5.0] - 2026-01-17
 
 ### Added
@@ -492,9 +640,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This changelog will be updated as development progresses through each phase.
 
-**Target Launch:** Q2 2026
+**Status:** All development phases complete. Ready for production launch.
 
-[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/doublegate/DropDeck/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/doublegate/DropDeck/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/doublegate/DropDeck/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/doublegate/DropDeck/compare/v0.2.0...v0.3.0

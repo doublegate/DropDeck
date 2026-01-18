@@ -1,6 +1,6 @@
 import { router } from '@/lib/trpc/init';
-import { platformRouter } from './platform';
 import { deliveryRouter } from './delivery';
+import { platformRouter } from './platform';
 import { preferenceRouter } from './preference';
 import { userRouter } from './user';
 

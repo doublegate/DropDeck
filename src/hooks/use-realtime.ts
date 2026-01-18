@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
 import Ably from 'ably';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type {
-  RealtimeEvent,
+  ConnectionStatusEvent,
   DeliveryUpdateEvent,
   LocationUpdateEvent,
-  ConnectionStatusEvent,
+  RealtimeEvent,
 } from '@/lib/realtime/events';
 
 /**

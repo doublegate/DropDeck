@@ -7,7 +7,7 @@
  */
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { logError, getUserFriendlyMessage, getErrorSeverity } from '@/lib/errors';
+import { getErrorSeverity, getUserFriendlyMessage, logError } from '@/lib/errors';
 import { cn } from '@/lib/utils';
 
 /**

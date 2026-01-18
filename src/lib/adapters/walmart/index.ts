@@ -1,10 +1,10 @@
+import type { DeliveryStatus, DriverLocation, OrderItem, UnifiedDelivery } from '@/types/delivery';
 import { SessionBasedAdapter } from '../base';
-import type { AdapterConnection, AdapterMetadata, TokenSet } from '../types';
-import type { DeliveryStatus, UnifiedDelivery, DriverLocation, OrderItem } from '@/types/delivery';
-import { getWalmartClient, type WalmartApiClient } from './client';
 import { walmartStatusMap } from '../status-map';
-import { maskPhoneNumber, maskLicensePlate, parseDate } from '../utils';
-import type { WalmartOrder, WalmartSessionData, WalmartOrderType } from './types';
+import type { AdapterConnection, AdapterMetadata, TokenSet } from '../types';
+import { maskLicensePlate, maskPhoneNumber, parseDate } from '../utils';
+import { getWalmartClient, type WalmartApiClient } from './client';
+import type { WalmartOrder, WalmartOrderType, WalmartSessionData } from './types';
 
 /**
  * Walmart+ Platform Adapter

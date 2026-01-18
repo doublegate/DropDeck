@@ -6,8 +6,8 @@
  * Sprint 5.5 - Error Handling and Offline Support
  */
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useOnlineStatus } from '@/hooks/use-online-status';
 import { useReducedMotion } from '@/lib/accessibility';
 import { getAccessibleVariants, slideUpVariants } from '@/lib/animations/variants';

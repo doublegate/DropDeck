@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Truck, Clock, CheckCircle, Package, TrendingUp } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { CheckCircle, Clock, Package, TrendingUp, Truck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 /**
  * Stat card data

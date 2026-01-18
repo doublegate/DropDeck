@@ -2,8 +2,8 @@
  * Real-time event types for DropDeck
  */
 
-import type { Platform } from './platform';
 import type { DeliveryStatus, UnifiedDelivery } from './delivery';
+import type { Platform } from './platform';
 
 /**
  * Base event structure

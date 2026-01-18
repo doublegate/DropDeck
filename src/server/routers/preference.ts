@@ -1,7 +1,7 @@
-import { z } from 'zod';
 import { eq } from 'drizzle-orm';
-import { router, protectedProcedure } from '@/lib/trpc/init';
+import { z } from 'zod';
 import { userPreferences } from '@/lib/db/schema';
+import { protectedProcedure, router } from '@/lib/trpc/init';
 
 /**
  * Notification settings schema

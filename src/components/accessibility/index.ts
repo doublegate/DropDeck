@@ -3,21 +3,21 @@
  * Sprint 5.4 - Accessibility Features
  */
 
-export { SkipLinks, SkipLinkTarget, SkipLinkTargets } from './skip-links';
-export { FocusTrap, FocusSentinel } from './focus-trap';
+export { FocusSentinel, FocusTrap } from './focus-trap';
+export { KeyboardShortcutsHelp } from './keyboard-shortcuts-help';
 export {
-  LiveRegion,
   Alert,
-  Status,
-  Log,
-  Timer,
   Announcer,
+  LiveRegion,
+  Log,
+  Status,
+  Timer,
   useDelayedAnnouncement,
 } from './live-region';
+export { SkipLinks, SkipLinkTarget, SkipLinkTargets } from './skip-links';
 export {
-  VisuallyHidden,
-  SrOnly,
   AccessibleIcon,
   Decorative,
+  SrOnly,
+  VisuallyHidden,
 } from './visually-hidden';
-export { KeyboardShortcutsHelp } from './keyboard-shortcuts-help';

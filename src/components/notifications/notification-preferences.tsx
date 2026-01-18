@@ -1,12 +1,12 @@
 'use client';
 
+import { BellRing, Clock, Moon, Smartphone, Volume2, VolumeX } from 'lucide-react';
 import { useState } from 'react';
-import { BellRing, Volume2, VolumeX, Moon, Smartphone, Clock } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
 
 /**
  * Notification preferences

@@ -6,13 +6,13 @@
  * Sprint 5.4 - Accessibility Features
  */
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { AppShortcuts, formatShortcut } from '@/hooks/use-keyboard-shortcuts';
-import { FocusTrap } from './focus-trap';
 import { useReducedMotion } from '@/lib/accessibility';
 import { getAccessibleVariants, scaleVariants } from '@/lib/animations/variants';
 import { cn } from '@/lib/utils';
+import { FocusTrap } from './focus-trap';
 
 /**
  * Props for KeyboardShortcutsHelp

@@ -1,8 +1,7 @@
+import { eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
-import { eq } from 'drizzle-orm';
-import { router, protectedProcedure, publicProcedure } from '@/lib/trpc/init';
-import { users, accounts, platformConnections, deliveryHistory } from '@/lib/db/schema';
-import { sql } from 'drizzle-orm';
+import { accounts, deliveryHistory, platformConnections, users } from '@/lib/db/schema';
+import { protectedProcedure, publicProcedure, router } from '@/lib/trpc/init';
 
 /**
  * User router - handles user profile and account operations

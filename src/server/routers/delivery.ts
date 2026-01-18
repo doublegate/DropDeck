@@ -1,12 +1,12 @@
-import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
-import { eq, and, desc, gt, sql } from 'drizzle-orm';
 import { observable } from '@trpc/server/observable';
-import { router, protectedProcedure } from '@/lib/trpc/init';
-import { deliveryCache, deliveryHistory, platformConnections } from '@/lib/db/schema';
+import { and, desc, eq, gt, sql } from 'drizzle-orm';
+import { z } from 'zod';
 import { getAdapter } from '@/lib/adapters/registry';
+import { deliveryCache, deliveryHistory, platformConnections } from '@/lib/db/schema';
 import { decryptToken } from '@/lib/encryption/tokens';
-import type { UnifiedDelivery, DriverLocation } from '@/types/delivery';
+import { protectedProcedure, router } from '@/lib/trpc/init';
+import type { DriverLocation, UnifiedDelivery } from '@/types/delivery';
 
 /**
  * Platform schema for validation

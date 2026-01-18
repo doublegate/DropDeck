@@ -1,21 +1,21 @@
 import crypto from 'node:crypto';
-import { createPlatformRateLimiter, checkRateLimit } from '@/lib/ratelimit';
+import { checkRateLimit, createPlatformRateLimiter } from '@/lib/ratelimit';
 import {
   PlatformAuthError,
+  PlatformDataError,
+  PlatformNetworkError,
   PlatformRateLimitError,
   PlatformUnavailableError,
-  PlatformNetworkError,
-  PlatformDataError,
 } from '../errors';
 import { withRetry } from '../utils';
 import {
-  UberEatsTokenResponseSchema,
-  UberEatsOrdersResponseSchema,
-  UberEatsOrderSchema,
-  type UberEatsTokenResponse,
-  type UberEatsOrdersResponse,
-  type UberEatsOrder,
   type PKCEChallenge,
+  type UberEatsOrder,
+  UberEatsOrderSchema,
+  type UberEatsOrdersResponse,
+  UberEatsOrdersResponseSchema,
+  type UberEatsTokenResponse,
+  UberEatsTokenResponseSchema,
 } from './types';
 
 /**

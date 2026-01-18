@@ -4,14 +4,13 @@
  */
 
 export {
-  OfflineIndicator,
-  OfflineStatusBadge,
-  ConnectionQuality,
-} from './offline-indicator';
-
-export {
-  OfflineFallback,
+  CachedContent,
   DefaultOfflineFallback,
   OfflineAware,
-  CachedContent,
+  OfflineFallback,
 } from './offline-fallback';
+export {
+  ConnectionQuality,
+  OfflineIndicator,
+  OfflineStatusBadge,
+} from './offline-indicator';
