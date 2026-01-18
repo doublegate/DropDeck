@@ -56,8 +56,12 @@ export const deliveryRouter = router({
 
     const deliveryPromises = connections.map(async (conn) => {
       try {
+        if (!conn.accessTokenEncrypted) {
+          console.error(`No access token for ${conn.platform}`);
+          return [];
+        }
         const adapter = getAdapter(conn.platform);
-        const accessToken = decryptToken(conn.accessTokenEncrypted!);
+        const accessToken = decryptToken(conn.accessTokenEncrypted);
         return await adapter.getActiveDeliveries({
           accessToken,
           userId: ctx.user.id as string,
@@ -130,8 +134,15 @@ export const deliveryRouter = router({
         });
       }
 
+      if (!connection.accessTokenEncrypted) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: `No access token for ${input.platform}`,
+        });
+      }
+
       const adapter = getAdapter(input.platform);
-      const accessToken = decryptToken(connection.accessTokenEncrypted!);
+      const accessToken = decryptToken(connection.accessTokenEncrypted);
 
       return adapter.getDeliveryDetails(
         { accessToken, userId: ctx.user.id as string, platform: connection.platform },

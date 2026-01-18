@@ -289,9 +289,13 @@ export const platformRouter = router({
         return { connected: false, error: 'Not connected' };
       }
 
+      if (!connection.accessTokenEncrypted) {
+        return { connected: false, error: 'No access token' };
+      }
+
       try {
         const adapter = getAdapter(input.platform);
-        const accessToken = decryptToken(connection.accessTokenEncrypted!);
+        const accessToken = decryptToken(connection.accessTokenEncrypted);
         await adapter.testConnection(accessToken);
         return { connected: true };
       } catch (error) {

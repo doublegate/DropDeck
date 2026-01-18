@@ -7,6 +7,105 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-01-17
+
+### Added
+
+#### Phase 5: Polish & Testing Complete
+
+**Sprint 5.1: Unit Testing Infrastructure**
+- Vitest configuration (`vitest.config.ts`) with TypeScript, React Testing Library, and path aliases
+- Test utilities and custom render wrapper with all providers (`tests/utils/`)
+- Mock factories for deliveries, platforms, users, and notifications (`tests/utils/fixtures.ts`)
+- MSW (Mock Service Worker) handlers for API mocking (`tests/mocks/`)
+- Component tests for shadcn/ui components (Button, Card, Badge, Switch, Avatar)
+- Hook tests for `useToast`, `useNotifications`, `use-realtime`
+- Service tests for ETA calculation (`tests/lib/services/eta.test.ts`)
+- Error handling tests (`tests/lib/errors.test.ts`)
+- Encryption utility tests
+
+**Sprint 5.2: E2E Testing with Playwright**
+- Playwright configuration (`playwright.config.ts`) for multi-browser testing
+- Custom test fixtures with authentication helpers (`e2e/fixtures.ts`)
+- Authentication flow tests (`e2e/auth.spec.ts`)
+- Dashboard tests with delivery interactions (`e2e/dashboard.spec.ts`)
+- Settings page tests with platform connections (`e2e/settings.spec.ts`)
+- Accessibility compliance tests (`e2e/accessibility.spec.ts`)
+- Offline functionality tests (`e2e/offline.spec.ts`)
+
+**Sprint 5.3: Performance Optimization**
+- Web Vitals monitoring (`src/lib/performance/web-vitals.ts`)
+  - LCP, FID, CLS, TTFB, INP tracking
+  - Performance analytics integration
+- `OptimizedImage` component with lazy loading and blur placeholders
+- `VirtualizedDeliveryList` for efficient rendering of large lists
+- `LazyLoad` component with intersection observer
+- Lazy component loaders for code splitting (`src/components/lazy/`)
+- Route-level code splitting for maps, notifications, settings
+- Performance utilities: debounce, throttle, memoization
+
+**Sprint 5.4: Accessibility Features**
+- Skip links component for keyboard navigation (`src/components/accessibility/skip-links.tsx`)
+- Live region announcer for screen readers (`src/components/accessibility/live-region.tsx`)
+- Focus trap utility for modals and dialogs (`src/lib/accessibility/focus-trap.ts`)
+- ARIA utilities for dynamic attribute management
+- Keyboard shortcuts hook (`src/hooks/use-keyboard-shortcuts.tsx`)
+- Reduced motion detection with `prefers-reduced-motion` support
+- High contrast mode detection and support
+- Comprehensive accessibility E2E tests
+
+**Sprint 5.5: Error Handling and Offline Support**
+- Custom error class hierarchy (`src/lib/errors/index.ts`):
+  - `DropDeckError` base class with error codes and context
+  - `NetworkError`, `ApiError`, `AuthError`, `PlatformError`
+  - `ValidationError`, `RateLimitError`, `OfflineError`
+- Error utilities: severity detection, user-friendly messages, retry logic
+- Error boundary components with fallback UI (`src/components/errors/`)
+- Offline detection hook (`src/hooks/use-online-status.ts`)
+- Offline indicator component with reconnection status
+- Offline queue for pending operations
+- Service worker preparation for PWA support
+
+### Technical Details
+- **38 new files created** across tests, e2e, and source directories
+- **7 files modified** (existing infrastructure)
+- **+9,000 lines of code** (tests and implementation)
+- **Total codebase: 168 files, ~29,600 lines**
+- TypeScript compilation: PASS
+- Biome lint: PASS (153 files checked)
+- 18 unit test files, 5 E2E test files
+
+### Testing Architecture
+
+| Category | Files | Coverage Target |
+|----------|-------|-----------------|
+| Unit Tests | 18 test files | 80%+ |
+| E2E Tests | 5 spec files | Critical paths |
+| Component Tests | Button, Card, Badge, Switch, Avatar | UI components |
+| Hook Tests | useToast, useNotifications, use-realtime | Custom hooks |
+| Service Tests | ETA calculation, error handling | Business logic |
+
+### Accessibility Compliance
+
+| Feature | Implementation |
+|---------|----------------|
+| Keyboard Navigation | Skip links, focus trap, keyboard shortcuts |
+| Screen Reader Support | Live regions, ARIA attributes, semantic HTML |
+| Visual Accessibility | High contrast mode, reduced motion |
+| Focus Management | Focus trap, focus ring visibility |
+| WCAG 2.1 AA | Comprehensive E2E accessibility tests |
+
+### Error Handling Strategy
+
+| Error Type | Handling | User Experience |
+|------------|----------|-----------------|
+| Network Errors | Auto-retry with exponential backoff | "Connection lost" indicator |
+| API Errors | Error boundary catch, logging | User-friendly error messages |
+| Auth Errors | Session refresh, re-login prompt | "Session expired" notification |
+| Offline | Queue operations, sync on reconnect | Offline indicator badge |
+
+---
+
 ## [0.4.0] - 2026-01-17
 
 ### Added
@@ -395,7 +494,8 @@ This changelog will be updated as development progresses through each phase.
 
 **Target Launch:** Q2 2026
 
-[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/doublegate/DropDeck/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/doublegate/DropDeck/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/doublegate/DropDeck/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/doublegate/DropDeck/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/doublegate/DropDeck/compare/v0.1.0...v0.2.0

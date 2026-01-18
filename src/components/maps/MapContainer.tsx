@@ -100,7 +100,9 @@ export function MapContainer({
       // Handle map load
       map.current.on('load', () => {
         setIsLoading(false);
-        onMapReady?.(map.current!);
+        if (map.current) {
+          onMapReady?.(map.current);
+        }
       });
 
       // Handle errors

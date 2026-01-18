@@ -8,7 +8,46 @@ import type { Transition, Variants } from 'framer-motion';
  * - Fast: 150ms - Micro-interactions (hover, focus)
  * - Normal: 200ms - State changes (toggle, select)
  * - Slow: 300ms - Page transitions, modals
+ *
+ * Accessibility:
+ * - All animations respect prefers-reduced-motion
+ * - Use reducedMotion variants for accessible alternatives
  */
+
+/**
+ * Check if user prefers reduced motion (server-safe)
+ */
+export function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/**
+ * Create reduced motion variant (instant transitions)
+ */
+export function createReducedMotionVariant(variants: Variants): Variants {
+  const reducedVariants: Variants = {};
+
+  for (const [key, value] of Object.entries(variants)) {
+    if (typeof value === 'object' && value !== null) {
+      reducedVariants[key] = {
+        ...value,
+        transition: { duration: 0 },
+      };
+    } else {
+      reducedVariants[key] = value;
+    }
+  }
+
+  return reducedVariants;
+}
+
+/**
+ * Get variants based on motion preference
+ */
+export function getAccessibleVariants(variants: Variants, reducedMotion: boolean): Variants {
+  return reducedMotion ? createReducedMotionVariant(variants) : variants;
+}
 
 // Default transition settings
 export const defaultTransition: Transition = {
@@ -255,3 +294,35 @@ export const pulseVariants: Variants = {
     },
   },
 };
+
+/**
+ * Reduced motion variants (instant transitions)
+ * Use these when prefers-reduced-motion is enabled
+ */
+export const reducedMotionVariants = {
+  fade: createReducedMotionVariant(fadeVariants),
+  slideUp: createReducedMotionVariant(slideUpVariants),
+  slideInLeft: createReducedMotionVariant(slideInLeftVariants),
+  slideInRight: createReducedMotionVariant(slideInRightVariants),
+  scale: createReducedMotionVariant(scaleVariants),
+  dropdown: createReducedMotionVariant(dropdownVariants),
+  toast: createReducedMotionVariant(toastVariants),
+  page: createReducedMotionVariant(pageTransitionVariants),
+};
+
+/**
+ * No animation transition (for reduced motion)
+ */
+export const noAnimationTransition: Transition = {
+  duration: 0,
+};
+
+/**
+ * Get transition based on motion preference
+ */
+export function getAccessibleTransition(
+  transition: Transition,
+  reducedMotion: boolean
+): Transition {
+  return reducedMotion ? noAnimationTransition : transition;
+}

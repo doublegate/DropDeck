@@ -8,7 +8,7 @@
 
 **Every drop. One deck.**
 
-[![Project Status](https://img.shields.io/badge/status-Phase%204%20Complete-success)](https://github.com/doublegate/DropDeck)
+[![Project Status](https://img.shields.io/badge/status-Phase%205%20Complete-success)](https://github.com/doublegate/DropDeck)
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
@@ -241,7 +241,7 @@ Development is organized into 6 phases with 1,516 total tasks:
 | 2 | [Core Infrastructure](./to-dos/PHASE-2-CORE-INFRASTRUCTURE.md) | **Complete** | 153 |
 | 3 | [Platform Adapters](./to-dos/PHASE-3-PLATFORM-ADAPTERS.md) | **Complete** | 330 |
 | 4 | [Real-Time Features](./to-dos/PHASE-4-REAL-TIME-FEATURES.md) | **Complete** | 270 |
-| 5 | [Polish & Testing](./to-dos/PHASE-5-POLISH-AND-TESTING.md) | Planned | 302 |
+| 5 | [Polish & Testing](./to-dos/PHASE-5-POLISH-AND-TESTING.md) | **Complete** | 302 |
 | 6 | [Launch](./to-dos/PHASE-6-LAUNCH.md) | Planned | 289 |
 
 **Target Launch:** Q2 2026
