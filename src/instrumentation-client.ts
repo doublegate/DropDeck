@@ -1,6 +1,8 @@
 /**
  * Sentry client-side configuration
- * This file configures Sentry for the browser
+ * Next.js loads instrumentation-client.ts in the browser before the app
+ * hydrates. It replaces sentry.client.config.ts, which Sentry SDK 9+ no longer
+ * injects and which Turbopack builds (the Next.js 16 default) never loaded.
  */
 
 import * as Sentry from '@sentry/nextjs';
@@ -93,3 +95,6 @@ if (SENTRY_DSN) {
     },
   });
 }
+
+// Instruments App Router navigations (Sentry SDK 9+).
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

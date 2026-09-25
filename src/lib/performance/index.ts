@@ -288,27 +288,17 @@ export function reportVital(name: keyof WebVitals, value: number): void {
 export function initWebVitals(): void {
   if (typeof window === 'undefined') return;
 
-  // Use dynamic import for web-vitals library
-  // Note: Install web-vitals package for this to work: bun add web-vitals
-  // @ts-expect-error - web-vitals is an optional dependency
+  // Dynamic import keeps web-vitals out of the initial bundle
   import('web-vitals')
-    .then(
-      (webVitals: {
-        onCLS: (cb: (metric: { value: number }) => void) => void;
-        onFCP: (cb: (metric: { value: number }) => void) => void;
-        onLCP: (cb: (metric: { value: number }) => void) => void;
-        onTTFB: (cb: (metric: { value: number }) => void) => void;
-        onINP?: (cb: (metric: { value: number }) => void) => void;
-      }) => {
-        webVitals.onCLS((metric) => reportVital('CLS', metric.value));
-        webVitals.onFCP((metric) => reportVital('FCP', metric.value));
-        webVitals.onLCP((metric) => reportVital('LCP', metric.value));
-        webVitals.onTTFB((metric) => reportVital('TTFB', metric.value));
-        webVitals.onINP?.((metric) => reportVital('INP', metric.value));
-      }
-    )
+    .then((webVitals) => {
+      webVitals.onCLS((metric) => reportVital('CLS', metric.value));
+      webVitals.onFCP((metric) => reportVital('FCP', metric.value));
+      webVitals.onLCP((metric) => reportVital('LCP', metric.value));
+      webVitals.onTTFB((metric) => reportVital('TTFB', metric.value));
+      webVitals.onINP((metric) => reportVital('INP', metric.value));
+    })
     .catch(() => {
-      // web-vitals not installed, skip
+      // Chunk failed to load (offline, blocked); vitals are best-effort
       console.debug('[Performance] web-vitals library not available');
     });
 }

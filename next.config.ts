@@ -1,4 +1,4 @@
-import { withSentryConfig } from '@sentry/nextjs';
+import { withSentryConfig } from '@sentry/nextjs/config';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -47,22 +47,27 @@ const sentryWebpackPluginOptions = {
   // Upload source maps for better error tracking
   widenClientFileUpload: true,
 
-  // Hide source maps from client bundles
-  hideSourceMaps: true,
+  // Client source maps are emitted hidden and deleted after upload by default
+  // (SDK 9+), so the former hideSourceMaps option no longer exists.
 
-  // Disable Sentry SDK logger
-  disableLogger: true,
-
-  // Automatically annotate React components
+  // Automatically annotate React components (webpack and Turbopack)
   reactComponentAnnotation: {
     enabled: true,
   },
 
-  // Route handlers and middleware instrumentation
+  // Tunnel browser events through the app to avoid ad-blockers. The path is
+  // excluded from the auth middleware matcher in src/middleware.ts.
   tunnelRoute: '/monitoring',
 
-  // Disable Vercel Cron instrumentation
-  automaticVercelMonitors: false,
+  webpack: {
+    // Strip Sentry SDK debug logging from the bundle
+    treeshake: {
+      removeDebugLogging: true,
+    },
+
+    // Disable Vercel Cron instrumentation
+    automaticVercelMonitors: false,
+  },
 };
 
 // Only wrap with Sentry if DSN is configured
