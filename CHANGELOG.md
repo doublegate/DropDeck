@@ -44,6 +44,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `web-vitals` is declared as a dependency; `initWebVitals` imported it
   without declaring it.
 
+### Security
+
+- Transitive lockfile refresh (`bun audit fix`) clears 9 of 10 advisories
+  (ws via ably, picomatch, browserslist, baseline-browser-mapping,
+  protocol-buffers-schema via maplibre-gl, @babel/core). The remaining one is
+  esbuild 0.18.20 (GHSA-67mh-4wv8-2f99, dev-server CORS) pulled in by
+  drizzle-kit's config loader; drizzle-kit never starts an esbuild dev server
+  and it is a devDependency, so it does not reach production.
+
 ### Held back
 
 - `@types/node` stays on the 24.x line (26.x exists) to match the Node 24 LTS
