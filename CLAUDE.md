@@ -21,8 +21,8 @@ DropDeck is a multi-platform delivery tracking aggregator - a responsive web app
 
 | Layer | Technology | Status |
 |-------|------------|--------|
-| Framework | Next.js 15 (App Router) | Implemented |
-| Language | TypeScript 5.x | Implemented |
+| Framework | Next.js 16 (App Router) | Implemented |
+| Language | TypeScript 7.x | Implemented |
 | Runtime/Package Manager | Bun | Implemented |
 | Styling | Tailwind CSS 4.x | Implemented |
 | Components | shadcn/ui | Implemented |

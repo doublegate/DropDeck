@@ -10,9 +10,9 @@
 
 [![Project Status](https://img.shields.io/badge/status-Phase%206%20Complete-success)](https://github.com/doublegate/DropDeck)
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7.x-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 
 A multi-platform delivery tracking aggregator that unifies real-time delivery tracking across 11+ platforms into a single, intuitive dashboard. View driver locations, estimated delivery times, and order status for all your active deliveries simultaneously.
@@ -59,12 +59,12 @@ A multi-platform delivery tracking aggregator that unifies real-time delivery tr
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| [Next.js](https://nextjs.org/) | 15.x | Full-stack React framework (App Router) |
+| [Next.js](https://nextjs.org/) | 16.x | Full-stack React framework (App Router) |
 | [React](https://react.dev/) | 19.x | UI component library |
-| [TypeScript](https://www.typescriptlang.org/) | 5.x | Type-safe development |
+| [TypeScript](https://www.typescriptlang.org/) | 7.x | Type-safe development |
 | [Tailwind CSS](https://tailwindcss.com/) | 4.x | Utility-first styling |
 | [shadcn/ui](https://ui.shadcn.com/) | Latest | Accessible component primitives |
-| [MapLibre GL JS](https://maplibre.org/) | 4.x | Interactive map rendering |
+| [MapLibre GL JS](https://maplibre.org/) | 6.x | Interactive map rendering |
 | [TanStack Query](https://tanstack.com/query) | 5.x | Server state management |
 | [Zustand](https://zustand-demo.pmnd.rs/) | 5.x | Client state management |
 
@@ -74,7 +74,7 @@ A multi-platform delivery tracking aggregator that unifies real-time delivery tr
 |------------|---------|---------|
 | [tRPC](https://trpc.io/) | 11.x | End-to-end typesafe APIs |
 | [NextAuth.js](https://authjs.dev/) | 5.x | Authentication framework |
-| [Drizzle ORM](https://orm.drizzle.team/) | 0.35.x | TypeScript ORM |
+| [Drizzle ORM](https://orm.drizzle.team/) | 0.45.x | TypeScript ORM |
 
 ### Infrastructure
 
@@ -99,8 +99,8 @@ A multi-platform delivery tracking aggregator that unifies real-time delivery tr
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) >= 1.0
-- [Node.js](https://nodejs.org/) >= 20.x (for compatibility)
+- [Bun](https://bun.sh/) >= 1.2 (text `bun.lock`; CI pins 1.4.2)
+- [Node.js](https://nodejs.org/) >= 20.19 (required by `@sentry/nextjs` 11; 24 LTS recommended)
 - PostgreSQL database (or [Neon](https://neon.tech/) account)
 - Redis instance (or [Upstash](https://upstash.com/) account)
 

@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Consolidated dependency update (supersedes #1). Every npm dependency and
+  GitHub Action is at its latest compatible release:
+  - `next` 16.1.3 -> 16.3.6 (includes the 16.1.5 security fix), `react` /
+    `react-dom` 19.2.3 -> 19.3.0, plus every other patch and minor update.
+  - Majors: `@sentry/nextjs` 8 -> 11, `typescript` 5 -> 7, `vitest` 4 -> 5,
+    `vite` 8 (now a direct devDependency, a vitest 5 peer),
+    `@vitejs/plugin-react` 5 -> 6, `jsdom` 27 -> 30,
+    `@testing-library/jest-dom` 6 -> 7, `lucide-react` 0.562 -> 1.48,
+    `framer-motion` 12 -> 13, `maplibre-gl` 5 -> 6, `@types/node` 20 -> 24.
+  - Actions: checkout v7, cache v6, upload-artifact v7, download-artifact v8,
+    github-script v9, codecov-action v7, getsentry/action-release v3; the
+    floating `snyk/actions/node@master` and `trufflehog@main` refs and
+    `bun-version: latest` are pinned.
+- Sentry is wired through `src/instrumentation.ts` and
+  `src/instrumentation-client.ts` (replacing `sentry.client.config.ts`).
+  Previously nothing imported the server or edge configs, so server-side
+  Sentry never initialised. The `/monitoring` tunnel route is excluded from
+  the auth middleware.
+- `maplibre-gl` is imported as a namespace; v6 has no default export.
+- `vite-tsconfig-paths` is replaced by Vite's native `resolve.tsconfigPaths`.
+
+### Removed
+
+- `@types/maplibre-gl`, a deprecated stub; `maplibre-gl` ships its own types.
+
+### Fixed
+
+- `@vitest/coverage-v8` was missing, so the CI coverage step could never run.
+- The CI `db:push` step could not succeed: drizzle-kit had only the Neon
+  websocket driver and `strict: true` prompted without a TTY. The `postgres`
+  driver is added as a devDependency and the push runs non-interactively.
+- The CI dependency cache keyed on `bun.lockb`, which does not exist.
+- `web-vitals` is declared as a dependency; `initWebVitals` imported it
+  without declaring it.
+
+### Held back
+
+- `@types/node` stays on the 24.x line (26.x exists) to match the Node 24 LTS
+  runtime on Vercel rather than typing APIs production does not have.
+
 ## [0.6.0] - 2026-01-17
 
 ### Added
