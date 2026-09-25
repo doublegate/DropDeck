@@ -44,6 +44,7 @@ Object.defineProperty(window, 'matchMedia', {
 class MockIntersectionObserver implements IntersectionObserver {
   readonly root: Element | Document | null = null;
   readonly rootMargin: string = '';
+  readonly scrollMargin: string = '';
   readonly thresholds: ReadonlyArray<number> = [];
 
   observe = vi.fn();
@@ -84,8 +85,10 @@ window.scrollTo = vi.fn();
 Element.prototype.scrollIntoView = vi.fn();
 
 // Mock MapLibre GL (heavy library)
-vi.mock('maplibre-gl', () => ({
-  default: {
+// maplibre-gl 6 is ESM with named exports only; the default export is kept so
+// either import style resolves to the same mock.
+vi.mock('maplibre-gl', () => {
+  const maplibreMock = {
     Map: vi.fn().mockImplementation(() => ({
       on: vi.fn(),
       off: vi.fn(),
@@ -116,12 +119,9 @@ vi.mock('maplibre-gl', () => ({
     NavigationControl: vi.fn(),
     GeolocateControl: vi.fn(),
     supported: vi.fn().mockReturnValue(true),
-  },
-  Map: vi.fn(),
-  Marker: vi.fn(),
-  NavigationControl: vi.fn(),
-  GeolocateControl: vi.fn(),
-}));
+  };
+  return { ...maplibreMock, default: maplibreMock };
+});
 
 // Mock react-map-gl (wrapper around MapLibre)
 vi.mock('react-map-gl/maplibre', () => ({

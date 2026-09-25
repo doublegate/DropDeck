@@ -163,7 +163,7 @@ bun run format
 
 ### Component Guidelines
 
-- Use Server Components by default (Next.js 15)
+- Use Server Components by default (Next.js 16)
 - Add `'use client'` directive only when client-side features are needed
 - Keep components focused and single-purpose
 - Extract reusable logic into custom hooks

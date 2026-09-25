@@ -1,6 +1,6 @@
 'use client';
 
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { interpolateLocation } from '@/lib/adapters/utils';
 import { ANIMATION, getPlatformMarkerColor } from '@/lib/maps/config';

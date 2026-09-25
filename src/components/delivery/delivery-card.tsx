@@ -122,13 +122,24 @@ function getPlatformStyles(platform: Platform) {
 }
 
 /**
+ * Progress stages shown by the indicator, in order.
+ * Module-level so the memoised index below has no unstable dependency.
+ */
+const PROGRESS_STAGES: readonly string[] = [
+  'preparing',
+  'out_for_delivery',
+  'arriving',
+  'delivered',
+];
+
+/**
  * Progress indicator component
  */
 function ProgressIndicator({ status }: { status: DeliveryStatus }) {
-  const stages = ['preparing', 'out_for_delivery', 'arriving', 'delivered'];
+  const stages = PROGRESS_STAGES;
   const currentStageIndex = useMemo(() => {
     if (status === 'cancelled') return -1;
-    if (status === 'delayed') return stages.indexOf('out_for_delivery');
+    if (status === 'delayed') return PROGRESS_STAGES.indexOf('out_for_delivery');
     if (
       [
         'driver_assigned',
@@ -139,7 +150,7 @@ function ProgressIndicator({ status }: { status: DeliveryStatus }) {
     ) {
       return 0.5; // Between preparing and out_for_delivery
     }
-    return stages.indexOf(status);
+    return PROGRESS_STAGES.indexOf(status);
   }, [status]);
 
   if (status === 'cancelled') {

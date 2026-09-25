@@ -15,9 +15,6 @@ if (SENTRY_DSN) {
     // Performance monitoring
     tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
-    // Profiling for performance insights
-    profilesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 0,
-
     // Filter out noisy errors
     ignoreErrors: [
       // Expected errors

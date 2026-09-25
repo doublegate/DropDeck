@@ -76,7 +76,6 @@ export const LiveRegion = memo(function LiveRegion({
   visuallyHidden = true,
 }: LiveRegionProps) {
   return (
-    // biome-ignore lint/a11y/useSemanticElements: div with role="status" is more flexible than output element
     <div
       role="status"
       aria-live={politeness}
@@ -129,7 +128,6 @@ export const Status = memo(function Status({
   visuallyHidden?: boolean;
 }) {
   return (
-    // biome-ignore lint/a11y/useSemanticElements: div with role="status" is more flexible than output element
     <div
       role="status"
       aria-live="polite"

@@ -1,6 +1,6 @@
 'use client';
 
-import type maplibregl from 'maplibre-gl';
+import type * as maplibregl from 'maplibre-gl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MapContainer } from '@/components/maps/MapContainer';
 import { type ConnectionState, useRealTimeUpdates } from '@/hooks/use-realtime';
