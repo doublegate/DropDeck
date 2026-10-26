@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Map as MapIcon, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { DeliveryFilters, DeliveryGrid, DeliveryStats } from '@/components/delivery';
 import { LiveTrackingMap } from '@/components/map';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import {
   useDashboardStore,
   useSortedDeliveries,
 } from '@/stores/dashboard-store';
-import type { DeliveryStatus } from '@/types/delivery';
+import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
 import type { Platform } from '@/types/platform';
 
 /**
@@ -35,6 +35,7 @@ export default function DashboardPage() {
     selectedDeliveryId,
     expandedDeliveryId,
     // Actions
+    setDeliveries,
     updateDelivery,
     togglePlatformFilter,
     toggleStatusFilter,
@@ -130,18 +131,80 @@ export default function DashboardPage() {
   const trackableDeliveries = useMemo(() => {
     return sortedDeliveries.filter(
       (d) =>
-        d.tracking.liveUpdates &&
+        d.tracking?.liveUpdates &&
         d.driver?.location &&
         !['delivered', 'cancelled'].includes(d.status)
     );
   }, [sortedDeliveries]);
 
+  // Fetch active deliveries on mount
+  const fetchActiveDeliveries = useCallback(async () => {
+    try {
+      const res = await fetch('/api/trpc/delivery.getActive');
+      if (!res.ok) return;
+      const json = (await res.json()) as {
+        result?: { data?: Partial<UnifiedDelivery>[] };
+      };
+      const rawDeliveries = json?.result?.data;
+      if (Array.isArray(rawDeliveries)) {
+        const now = new Date();
+        const normalized: UnifiedDelivery[] = rawDeliveries.map((d, index) => ({
+          id: d.id ?? `delivery-${index}`,
+          platform: d.platform ?? 'doordash',
+          externalOrderId: d.externalOrderId ?? d.id ?? `order-${index}`,
+          status: d.status ?? 'preparing',
+          statusLabel: d.statusLabel ?? 'Preparing',
+          statusUpdatedAt: d.statusUpdatedAt ? new Date(d.statusUpdatedAt) : now,
+          eta: {
+            estimatedArrival: d.eta?.estimatedArrival
+              ? new Date(d.eta.estimatedArrival)
+              : new Date(now.getTime() + (d.eta?.minutesRemaining ?? 15) * 60000),
+            minutesRemaining: d.eta?.minutesRemaining ?? 15,
+            confidence: d.eta?.confidence ?? 'high',
+          },
+          driver: d.driver,
+          destination: {
+            address: d.destination?.address ?? '123 Main St',
+            lat: d.destination?.lat ?? 37.7749,
+            lng: d.destination?.lng ?? -122.4194,
+          },
+          order: {
+            itemCount: d.order?.itemCount ?? 1,
+            totalAmount: d.order?.totalAmount,
+            items: d.order?.items,
+          },
+          tracking: {
+            mapAvailable: d.tracking?.mapAvailable ?? false,
+            liveUpdates: d.tracking?.liveUpdates ?? false,
+            contactDriverAvailable: d.tracking?.contactDriverAvailable ?? false,
+          },
+          timestamps: {
+            ordered: d.timestamps?.ordered ? new Date(d.timestamps.ordered) : now,
+          },
+          meta: {
+            lastFetchedAt: d.meta?.lastFetchedAt ? new Date(d.meta.lastFetchedAt) : now,
+            fetchMethod: d.meta?.fetchMethod ?? 'api',
+            adapterId: d.meta?.adapterId ?? d.platform ?? 'doordash',
+          },
+        }));
+        setDeliveries(normalized);
+      }
+    } catch {
+      // Ignore fetch errors in offline/unconfigured environments
+    }
+  }, [setDeliveries]);
+
+  useEffect(() => {
+    void fetchActiveDeliveries();
+  }, [fetchActiveDeliveries]);
+
   // Refresh handler
   const handleRefresh = useCallback(() => {
     setLoading(true);
-    // In production, this would trigger a re-fetch from tRPC
-    setTimeout(() => setLoading(false), 1000);
-  }, [setLoading]);
+    void fetchActiveDeliveries().finally(() => {
+      setTimeout(() => setLoading(false), 500);
+    });
+  }, [fetchActiveDeliveries, setLoading]);
 
   return (
     <div className="space-y-6">
@@ -215,7 +278,12 @@ export default function DashboardPage() {
                     {trackableDeliveries.length === 1 ? 'delivery' : 'deliveries'} on the map
                   </CardDescription>
                 </div>
-                <Button variant="ghost" size="sm" onClick={() => setMapExpanded(!mapExpanded)}>
+                <Button
+                  aria-label={mapExpanded ? 'Minimize map' : 'Maximize map'}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setMapExpanded(!mapExpanded)}
+                >
                   {mapExpanded ? (
                     <Minimize2 className="w-4 h-4" />
                   ) : (

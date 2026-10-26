@@ -169,7 +169,7 @@ export function ETADisplay({
   const rangeText = showRange ? formatETARange(etaResult.range) : null;
 
   return (
-    <div className={cn('flex flex-col', styles.container, className)}>
+    <div data-testid="eta-display" className={cn('flex flex-col', styles.container, className)}>
       {/* Main ETA display */}
       <div className="flex items-center gap-2">
         <AnimatePresence mode="wait">
@@ -249,6 +249,7 @@ export function ETADisplayCompact({
 
   return (
     <span
+      data-testid="eta-display"
       className={cn(
         'text-lg font-semibold tabular-nums',
         isDelivered

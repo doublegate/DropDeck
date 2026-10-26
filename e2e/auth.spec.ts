@@ -2,7 +2,7 @@
  * Authentication E2E tests
  */
 
-import { test, expect, setupMockAPI, mockUser } from './fixtures';
+import { createMockSessionCookie, expect, mockUser, setupMockAPI, test } from './fixtures';
 
 test.describe('Authentication', () => {
   test.describe('Login Page', () => {
@@ -64,17 +64,8 @@ test.describe('Authentication', () => {
       await setupMockAPI(page);
 
       // Set auth cookie
-      await page.context().addCookies([
-        {
-          name: 'authjs.session-token',
-          value: 'mock-session-token',
-          domain: 'localhost',
-          path: '/',
-          secure: false,
-          httpOnly: true,
-          sameSite: 'Lax',
-        },
-      ]);
+      const sessionCookie = await createMockSessionCookie();
+      await page.context().addCookies([sessionCookie]);
 
       await page.goto('/dashboard');
 
@@ -137,7 +128,7 @@ test.describe('Authentication', () => {
       await page.goto('/api/auth/error?error=AccessDenied');
 
       // Should show error message or redirect to login
-      const errorMessage = page.getByText(/error|denied|failed/i);
+      const errorMessage = page.getByText(/error|denied|failed/i).first();
       if (await errorMessage.isVisible()) {
         await expect(errorMessage).toBeVisible();
       }

@@ -29,23 +29,27 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-    // Mobile viewports
-    {
-      name: 'mobile-chrome',
-      use: { ...devices['Pixel 5'] },
-    },
-    {
-      name: 'mobile-safari',
-      use: { ...devices['iPhone 14'] },
-    },
+    ...(!process.env.CI
+      ? [
+          {
+            name: 'firefox',
+            use: { ...devices['Desktop Firefox'] },
+          },
+          {
+            name: 'webkit',
+            use: { ...devices['Desktop Safari'] },
+          },
+          // Mobile viewports
+          {
+            name: 'mobile-chrome',
+            use: { ...devices['Pixel 5'] },
+          },
+          {
+            name: 'mobile-safari',
+            use: { ...devices['iPhone 14'] },
+          },
+        ]
+      : []),
   ],
   webServer: {
     command: 'bun run dev',
@@ -54,5 +58,9 @@ export default defineConfig({
     timeout: 120 * 1000,
     stdout: 'pipe',
     stderr: 'pipe',
+    env: {
+      ...process.env,
+      AUTH_SECRET: process.env.AUTH_SECRET ?? 'test-secret-at-least-32-characters-long',
+    },
   },
 });

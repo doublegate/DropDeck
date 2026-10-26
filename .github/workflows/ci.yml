@@ -9,6 +9,7 @@ on:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -29,7 +30,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           # Pinned: 'latest' adopts every release unreviewed; bump deliberately
-          bun-version: 1.4.2
+          bun-version: 1.4.4
 
       - name: Cache dependencies
         uses: actions/cache@v6
@@ -65,7 +66,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U test -d dropdeck_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -78,7 +79,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           # Pinned: 'latest' adopts every release unreviewed; bump deliberately
-          bun-version: 1.4.2
+          bun-version: 1.4.4
 
       - name: Cache dependencies
         uses: actions/cache@v6
@@ -131,7 +132,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           # Pinned: 'latest' adopts every release unreviewed; bump deliberately
-          bun-version: 1.4.2
+          bun-version: 1.4.4
 
       - name: Cache dependencies
         uses: actions/cache@v6
@@ -172,12 +173,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           # Pinned: 'latest' adopts every release unreviewed; bump deliberately
-          bun-version: 1.4.2
+          bun-version: 1.4.4
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -191,11 +194,11 @@ jobs:
           args: --severity-threshold=high
 
       - name: Check for secrets
-        uses: trufflesecurity/trufflehog@v3.97.9
+        uses: trufflesecurity/trufflehog@v3.99.7
         continue-on-error: true
         with:
           path: ./
-          base: main
+          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
           head: HEAD
           extra_args: --only-verified
 
@@ -214,7 +217,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           # Pinned: 'latest' adopts every release unreviewed; bump deliberately
-          bun-version: 1.4.2
+          bun-version: 1.4.4
 
       - name: Cache dependencies
         uses: actions/cache@v6
@@ -252,30 +255,37 @@ jobs:
       name: preview
     steps:
       - name: Checkout
+        if: env.VERCEL_TOKEN != ''
         uses: actions/checkout@v7
 
       - name: Download build artifacts
+        if: env.VERCEL_TOKEN != ''
         uses: actions/download-artifact@v8
         with:
           name: build
           path: .next/
 
       - name: Install Vercel CLI
+        if: env.VERCEL_TOKEN != ''
         run: npm i -g vercel@latest
 
       - name: Pull Vercel Environment
+        if: env.VERCEL_TOKEN != ''
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project
+        if: env.VERCEL_TOKEN != ''
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Preview
+        if: env.VERCEL_TOKEN != ''
         id: deploy
         run: |
           url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$url" >> $GITHUB_OUTPUT
 
       - name: Comment PR with Preview URL
+        if: env.VERCEL_TOKEN != ''
         uses: actions/github-script@v9
         env:
           PREVIEW_URL: ${{ steps.deploy.outputs.url }}
@@ -302,29 +312,35 @@ jobs:
       url: https://dropdeck.app
     steps:
       - name: Checkout
+        if: env.VERCEL_TOKEN != ''
         uses: actions/checkout@v7
 
       - name: Download build artifacts
+        if: env.VERCEL_TOKEN != ''
         uses: actions/download-artifact@v8
         with:
           name: build
           path: .next/
 
       - name: Install Vercel CLI
+        if: env.VERCEL_TOKEN != ''
         run: npm i -g vercel@latest
 
       - name: Pull Vercel Environment
+        if: env.VERCEL_TOKEN != ''
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project
+        if: env.VERCEL_TOKEN != ''
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Production
+        if: env.VERCEL_TOKEN != ''
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Create Sentry Release
         uses: getsentry/action-release@v3
-        if: env.SENTRY_AUTH_TOKEN != ''
+        if: env.VERCEL_TOKEN != '' && env.SENTRY_AUTH_TOKEN != ''
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
@@ -333,6 +349,7 @@ jobs:
           environment: production
 
       - name: Log deployment success
+        if: env.VERCEL_TOKEN != ''
         run: |
           echo "Successfully deployed to production!"
           echo "URL: https://dropdeck.app"

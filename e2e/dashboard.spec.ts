@@ -2,7 +2,7 @@
  * Dashboard E2E tests
  */
 
-import { test, expect, mockDeliveries, goToDashboard } from './fixtures';
+import { createMockSessionCookie, expect, goToDashboard, mockDeliveries, test } from './fixtures';
 
 test.describe('Dashboard', () => {
   test.describe('Layout', () => {
@@ -14,7 +14,7 @@ test.describe('Dashboard', () => {
       await expect(header).toBeVisible();
 
       // Logo or app name should be visible
-      const logo = page.getByText(/dropdeck/i);
+      const logo = header.getByText(/dropdeck/i);
       await expect(logo).toBeVisible();
     });
 
@@ -116,17 +116,12 @@ test.describe('Dashboard', () => {
         });
       });
 
-      await page.context().addCookies([
-        {
-          name: 'authjs.session-token',
-          value: 'mock-session-token',
-          domain: 'localhost',
-          path: '/',
-          secure: false,
-          httpOnly: true,
-          sameSite: 'Lax',
-        },
-      ]);
+      const sessionCookie = await createMockSessionCookie({
+        id: 'test',
+        name: 'Test',
+        email: 'test@example.com',
+      });
+      await page.context().addCookies([sessionCookie]);
 
       await goToDashboard(page);
 

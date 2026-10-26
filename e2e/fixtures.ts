@@ -2,7 +2,39 @@
  * Playwright test fixtures for DropDeck E2E tests
  */
 
-import { test as base, expect, type Page } from '@playwright/test';
+import { type Page, test as base, expect } from '@playwright/test';
+import { encode } from 'next-auth/jwt';
+
+const TEST_AUTH_SECRET = process.env.AUTH_SECRET ?? 'test-secret-at-least-32-characters-long';
+
+/**
+ * Create a valid NextAuth v5 encrypted JWT session cookie for E2E tests
+ */
+export async function createMockSessionCookie(
+  user: { id: string; name: string; email: string; image?: string } = mockUser
+) {
+  const value = await encode({
+    token: {
+      id: user.id,
+      sub: user.id,
+      name: user.name,
+      email: user.email,
+      picture: user.image,
+    },
+    secret: TEST_AUTH_SECRET,
+    salt: 'authjs.session-token',
+  });
+
+  return {
+    name: 'authjs.session-token',
+    value,
+    domain: 'localhost',
+    path: '/',
+    secure: false,
+    httpOnly: true,
+    sameSite: 'Lax' as const,
+  };
+}
 
 /**
  * Extended fixtures for authenticated tests
@@ -185,18 +217,9 @@ export async function setupMockAPI(page: Page) {
 export async function setupAuthenticatedPage(page: Page) {
   await setupMockAPI(page);
 
-  // Set auth cookie
-  await page.context().addCookies([
-    {
-      name: 'authjs.session-token',
-      value: 'mock-session-token',
-      domain: 'localhost',
-      path: '/',
-      secure: false,
-      httpOnly: true,
-      sameSite: 'Lax',
-    },
-  ]);
+  // Set valid NextAuth JWT session cookie
+  const sessionCookie = await createMockSessionCookie();
+  await page.context().addCookies([sessionCookie]);
 }
 
 /**

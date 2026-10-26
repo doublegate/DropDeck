@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { useShallow } from 'zustand/react/shallow';
 import type { DeliveryStatus, UnifiedDelivery } from '@/types/delivery';
 import type { Platform } from '@/types/platform';
 
@@ -338,14 +339,17 @@ export const useDashboardStore = create<DashboardState>()(
  * Selector hooks for common computations
  */
 export const useFilteredDeliveries = () =>
-  useDashboardStore((state) => state.getFilteredDeliveries());
+  useDashboardStore(useShallow((state) => state.getFilteredDeliveries()));
 
-export const useSortedDeliveries = () => useDashboardStore((state) => state.getSortedDeliveries());
+export const useSortedDeliveries = () =>
+  useDashboardStore(useShallow((state) => state.getSortedDeliveries()));
 
 export const useDashboardStats = () =>
-  useDashboardStore((state) => ({
-    active: state.getActiveCount(),
-    arrivingSoon: state.getArrivingSoonCount(),
-    deliveredToday: state.getDeliveredTodayCount(),
-    total: state.deliveries.length,
-  }));
+  useDashboardStore(
+    useShallow((state) => ({
+      active: state.getActiveCount(),
+      arrivingSoon: state.getArrivingSoonCount(),
+      deliveredToday: state.getDeliveredTodayCount(),
+      total: state.deliveries.length,
+    }))
+  );
