@@ -36,7 +36,7 @@ export default async function LoginPage() {
         {/* Login Card */}
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Welcome back</CardTitle>
+            <CardTitle className="text-xl">Sign in to your account</CardTitle>
             <CardDescription>
               Sign in to track all your deliveries in one unified dashboard.
             </CardDescription>

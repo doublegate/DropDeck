@@ -11,7 +11,7 @@ import {
 } from '@/lib/animations';
 
 // Re-export motion and AnimatePresence for convenience
-export { motion, AnimatePresence };
+export { AnimatePresence, motion };
 
 // Animated container with fade
 export function FadeIn({

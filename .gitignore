@@ -142,3 +142,6 @@ public/mockServiceWorker.js
 *.key
 *.pem
 !*.example.key
+
+# Next.js 16.4+ auto-generated agent rules
+/AGENTS.md

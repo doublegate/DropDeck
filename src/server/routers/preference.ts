@@ -7,11 +7,14 @@ import { protectedProcedure, router } from '@/lib/trpc/init';
  * Notification settings schema
  */
 const notificationSettingsSchema = z.object({
-  driverAssigned: z.boolean(),
-  outForDelivery: z.boolean(),
-  arrivingSoon: z.boolean(),
-  delivered: z.boolean(),
-  delayed: z.boolean(),
+  pushEnabled: z.boolean().optional(),
+  inAppEnabled: z.boolean().optional(),
+  soundEnabled: z.boolean().optional(),
+  driverAssigned: z.boolean().default(true),
+  outForDelivery: z.boolean().default(true),
+  arrivingSoon: z.boolean().default(true),
+  delivered: z.boolean().default(true),
+  delayed: z.boolean().default(true),
   quietHours: z
     .object({
       enabled: z.boolean(),

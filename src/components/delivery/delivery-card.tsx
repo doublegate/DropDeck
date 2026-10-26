@@ -202,6 +202,10 @@ export function DeliveryCard({
       whileHover={{ y: -2 }}
     >
       <Card
+        data-testid="delivery-card"
+        data-delivery-id={delivery.id}
+        role="article"
+        tabIndex={onClick ? 0 : undefined}
         className={cn(
           'cursor-pointer transition-all duration-200',
           'hover:shadow-md',
@@ -212,12 +216,24 @@ export function DeliveryCard({
           className
         )}
         onClick={onClick}
+        onKeyDown={
+          onClick
+            ? (e) => {
+                if (e.target !== e.currentTarget) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onClick();
+                }
+              }
+            : undefined
+        }
       >
         <CardContent className="p-4">
           {/* Header row: Platform badge + ETA */}
           <div className="flex items-center justify-between mb-3">
             {/* Platform badge */}
             <div
+              data-testid="platform-badge"
               className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium"
               style={{
                 backgroundColor: `${platformStyles.color}15`,
@@ -244,6 +260,7 @@ export function DeliveryCard({
           {/* Status row */}
           <div className="flex items-center gap-2 mb-2">
             <div
+              data-testid="status-label"
               className={cn(
                 'flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border',
                 statusColors.text,

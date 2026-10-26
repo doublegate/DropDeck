@@ -119,6 +119,7 @@ export function DeliveryFilters({
         <div className="relative flex-1 max-w-md">
           <Input
             type="search"
+            aria-label="Filter deliveries"
             placeholder="Search deliveries..."
             value={filters.searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -128,6 +129,7 @@ export function DeliveryFilters({
           {filters.searchQuery && (
             <button
               type="button"
+              aria-label="Clear search"
               onClick={() => onSearchChange('')}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--dd-text-muted)] hover:text-[var(--dd-text-secondary)]"
             >
@@ -141,7 +143,7 @@ export function DeliveryFilters({
           {/* Platform filter */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button data-testid="platform-filter" variant="outline" size="sm" className="gap-2">
                 <Filter className="w-4 h-4" />
                 Platform
                 {filters.platforms.length > 0 && (
@@ -265,6 +267,7 @@ export function DeliveryFilters({
           {/* View mode toggle */}
           <div className="hidden sm:flex items-center border border-[var(--dd-border)] rounded-lg">
             <Button
+              aria-label="Grid view"
               variant="ghost"
               size="sm"
               className={cn(
@@ -276,6 +279,7 @@ export function DeliveryFilters({
               <Grid3X3 className="w-4 h-4" />
             </Button>
             <Button
+              aria-label="List view"
               variant="ghost"
               size="sm"
               className={cn('rounded-l-none', viewMode === 'list' && 'bg-[var(--dd-bg-tertiary)]')}

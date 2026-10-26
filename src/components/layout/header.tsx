@@ -28,13 +28,20 @@ export function Header({ onMenuClick }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b border-[var(--dd-border)] bg-[var(--dd-bg-card)] px-4 md:px-6">
       {/* Mobile menu button */}
-      <Button variant="ghost" size="icon" className="md:hidden" onClick={onMenuClick}>
+      <Button
+        data-testid="mobile-menu"
+        aria-label="Toggle menu"
+        variant="ghost"
+        size="icon"
+        className="md:hidden"
+        onClick={onMenuClick}
+      >
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle menu</span>
       </Button>
 
-      {/* Logo - hidden on mobile when sidebar is visible */}
-      <div className="hidden md:block">
+      {/* Logo */}
+      <div>
         <Logo size="sm" />
       </div>
 
@@ -44,6 +51,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--dd-text-muted)]" />
           <Input
             type="search"
+            aria-label="Search deliveries"
             placeholder="Search deliveries..."
             className="pl-9 bg-[var(--dd-bg-secondary)]"
           />
@@ -53,7 +61,13 @@ export function Header({ onMenuClick }: HeaderProps) {
       {/* Right side actions */}
       <div className="flex items-center gap-2">
         {/* Notifications */}
-        <Button variant="ghost" size="icon" className="relative">
+        <Button
+          data-testid="notification-bell"
+          aria-label="Notifications"
+          variant="ghost"
+          size="icon"
+          className="relative"
+        >
           <Bell className="h-5 w-5" />
           <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-error text-[10px] font-medium text-white">
             3
@@ -68,13 +82,19 @@ export function Header({ onMenuClick }: HeaderProps) {
         {session?.user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
+              <Button
+                data-testid="user-menu"
+                aria-label={session.user.name ?? 'User menu'}
+                variant="ghost"
+                className="flex items-center gap-2 rounded-full px-2"
+              >
                 {session.user.image ? (
                   <Image
                     src={session.user.image}
                     alt={session.user.name ?? 'User'}
                     width={32}
                     height={32}
+                    unoptimized
                     className="h-8 w-8 rounded-full"
                   />
                 ) : (
@@ -82,6 +102,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                     {getInitials(session.user.name ?? 'U')}
                   </div>
                 )}
+                <span className="sr-only">{session.user.name}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">

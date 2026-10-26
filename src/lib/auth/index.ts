@@ -59,7 +59,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     jwt({ token, user, account }) {
       // Add user ID to token on first sign in
-      if (user) {
+      if (user?.id) {
         token.id = user.id;
       }
       // Add access token if available

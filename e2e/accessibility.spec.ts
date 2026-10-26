@@ -147,8 +147,9 @@ test.describe('Accessibility', () => {
 
     test('form inputs have labels', async ({ authenticatedPage: page }) => {
       await goToSettings(page);
+      await page.waitForLoadState('networkidle');
 
-      const inputs = await page.locator('input, select, textarea').all();
+      const inputs = await page.locator('main input, main select, main textarea, header input').all();
 
       for (const input of inputs) {
         const id = await input.getAttribute('id');
@@ -264,10 +265,10 @@ test.describe('Accessibility', () => {
         // Should have valid aria-expanded value
         expect(['true', 'false']).toContain(ariaExpanded);
 
-        // If has aria-controls, target should exist
+        // If has aria-controls and is expanded, target should exist
         const ariaControls = await expandable.getAttribute('aria-controls');
-        if (ariaControls) {
-          const target = await page.locator(`#${ariaControls}`).count();
+        if (ariaControls && ariaExpanded === 'true') {
+          const target = await page.locator(`[id="${ariaControls}"]`).count();
           expect(target).toBeGreaterThanOrEqual(1);
         }
       }

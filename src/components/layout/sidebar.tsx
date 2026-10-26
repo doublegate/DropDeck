@@ -62,6 +62,7 @@ export function Sidebar({ collapsed = false, onCollapse }: SidebarProps) {
 
   return (
     <aside
+      data-testid="sidebar"
       className={cn(
         'hidden md:flex flex-col border-r border-[var(--dd-border)] bg-[var(--dd-bg-card)] transition-all duration-200',
         collapsed ? 'w-16' : 'w-64'
@@ -72,6 +73,7 @@ export function Sidebar({ collapsed = false, onCollapse }: SidebarProps) {
         <Logo showText={!collapsed} size="sm" />
         {onCollapse && (
           <Button
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             variant="ghost"
             size="icon"
             className={cn(
