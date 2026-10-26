@@ -1,11 +1,22 @@
 'use client';
 
 import { Laptop, Link2, Moon, Sun, Trash2 } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useState } from 'react';
+import superjson from 'superjson';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
+import type { NotificationSettings } from '@/types/platform';
 
 interface PlatformItem {
   id: string;
@@ -43,6 +54,17 @@ const DEFAULT_PREFS: PreferenceState = {
   delayed: true,
 };
 
+function unwrapTrpcData<T>(payload: unknown): T | undefined {
+  if (!payload || typeof payload !== 'object') return undefined;
+  const result = (payload as { result?: { data?: unknown } }).result;
+  const data = result?.data;
+  if (!data) return undefined;
+  if (typeof data === 'object' && data !== null && 'json' in data) {
+    return superjson.deserialize(data as Parameters<typeof superjson.deserialize>[0]) as T;
+  }
+  return data as T;
+}
+
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -54,22 +76,68 @@ export default function SettingsPage() {
     setMounted(true);
     async function loadSettings() {
       try {
-        const [platRes, prefRes] = await Promise.all([
-          fetch('/api/trpc/platform.list'),
-          fetch('/api/trpc/preference.get'),
+        const [connRes, listRes, prefRes] = await Promise.all([
+          fetch('/api/trpc/platform.getConnections').catch(() => null),
+          fetch('/api/trpc/platform.list').catch(() => null),
+          fetch('/api/trpc/preference.get').catch(() => null),
         ]);
-        if (platRes.ok) {
-          const platJson = (await platRes.json()) as { result?: { data?: PlatformItem[] } };
-          if (Array.isArray(platJson?.result?.data)) {
-            setPlatforms(platJson.result.data);
+
+        if (listRes?.ok) {
+          const listData = unwrapTrpcData<PlatformItem[]>(await listRes.json());
+          if (Array.isArray(listData) && listData[0] && 'name' in listData[0]) {
+            setPlatforms(listData);
+          }
+        } else if (connRes?.ok) {
+          const connData = unwrapTrpcData<
+            Array<{
+              platform?: string;
+              status?: string;
+              id?: string;
+              name?: string;
+              color?: string;
+              connected?: boolean;
+            }>
+          >(await connRes.json());
+          if (Array.isArray(connData)) {
+            if (connData[0] && 'name' in connData[0]) {
+              setPlatforms(connData as PlatformItem[]);
+            } else {
+              const connectedMap = new Map(
+                connData
+                  .filter((c) => typeof c.platform === 'string')
+                  .map((c) => [c.platform as string, c.status === 'connected'])
+              );
+              setPlatforms(
+                DEFAULT_PLATFORMS.map((p) => ({
+                  ...p,
+                  connected: connectedMap.get(p.id) ?? false,
+                }))
+              );
+            }
           }
         }
-        if (prefRes.ok) {
-          const prefJson = (await prefRes.json()) as {
-            result?: { data?: Partial<PreferenceState> };
-          };
-          if (prefJson?.result?.data) {
-            setPrefs((prev) => ({ ...prev, ...prefJson.result?.data }));
+
+        if (prefRes?.ok) {
+          const prefData = unwrapTrpcData<
+            Partial<PreferenceState> & {
+              notificationsEnabled?: boolean;
+              notificationSettings?: Partial<NotificationSettings> | null;
+            }
+          >(await prefRes.json());
+          if (prefData) {
+            const ns = prefData.notificationSettings ?? {};
+            const globalEnabled = prefData.notificationsEnabled ?? true;
+            setPrefs((prev) => ({
+              ...prev,
+              pushEnabled: prefData.pushEnabled ?? ns.pushEnabled ?? globalEnabled,
+              inAppEnabled: prefData.inAppEnabled ?? ns.inAppEnabled ?? globalEnabled,
+              soundEnabled: prefData.soundEnabled ?? ns.soundEnabled ?? prev.soundEnabled,
+              driverAssigned: prefData.driverAssigned ?? ns.driverAssigned ?? prev.driverAssigned,
+              outForDelivery: prefData.outForDelivery ?? ns.outForDelivery ?? prev.outForDelivery,
+              arrivingSoon: prefData.arrivingSoon ?? ns.arrivingSoon ?? prev.arrivingSoon,
+              delivered: prefData.delivered ?? ns.delivered ?? prev.delivered,
+              delayed: prefData.delayed ?? ns.delayed ?? prev.delayed,
+            }));
           }
         }
       } catch {
@@ -79,26 +147,99 @@ export default function SettingsPage() {
     void loadSettings();
   }, []);
 
-  const handleTogglePreference = useCallback((key: keyof PreferenceState, value: boolean) => {
-    setPrefs((prev) => ({ ...prev, [key]: value }));
-    void fetch('/api/trpc/preference.update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ [key]: value }),
-    }).catch(() => {});
+  const handleTogglePreference = useCallback(
+    async (key: keyof PreferenceState, value: boolean) => {
+      const previousPrefs = prefs;
+      const nextPrefs: PreferenceState = { ...prefs, [key]: value };
+      setPrefs(nextPrefs);
+      try {
+        const res = await fetch('/api/trpc/preference.update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            json: {
+              notificationsEnabled: nextPrefs.pushEnabled || nextPrefs.inAppEnabled,
+              notificationSettings: {
+                pushEnabled: nextPrefs.pushEnabled,
+                inAppEnabled: nextPrefs.inAppEnabled,
+                soundEnabled: nextPrefs.soundEnabled,
+                driverAssigned: nextPrefs.driverAssigned,
+                outForDelivery: nextPrefs.outForDelivery,
+                arrivingSoon: nextPrefs.arrivingSoon,
+                delivered: nextPrefs.delivered,
+                delayed: nextPrefs.delayed,
+              },
+            },
+          }),
+        });
+        if (!res.ok) {
+          setPrefs(previousPrefs);
+        }
+      } catch {
+        setPrefs(previousPrefs);
+      }
+    },
+    [prefs]
+  );
+
+  const handleConnectPlatform = useCallback(async (platformId: string) => {
+    try {
+      const payload = JSON.stringify({ json: { platform: platformId } });
+      let res = await fetch('/api/trpc/platform.initiateOAuth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+      });
+      if (!res.ok) {
+        res = await fetch('/api/trpc/platform.connect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+        });
+      }
+      if (!res.ok) return;
+      const data = unwrapTrpcData<{ authUrl?: string; success?: boolean }>(await res.json());
+      if (data?.authUrl) {
+        window.location.href = data.authUrl;
+        return;
+      }
+      setPlatforms((prev) =>
+        prev.map((p) => (p.id === platformId ? { ...p, connected: true } : p))
+      );
+    } catch {
+      // Do not mark connected when request fails
+    }
   }, []);
 
-  const handleConnectPlatform = useCallback((platformId: string) => {
-    void fetch('/api/trpc/platform.connect', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ platform: platformId }),
-    }).catch(() => {});
-    setPlatforms((prev) => prev.map((p) => (p.id === platformId ? { ...p, connected: true } : p)));
+  const handleDisconnectPlatform = useCallback(async (platformId: string) => {
+    try {
+      const res = await fetch('/api/trpc/platform.disconnect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ json: { platform: platformId } }),
+      });
+      if (!res.ok) return;
+      setPlatforms((prev) =>
+        prev.map((p) => (p.id === platformId ? { ...p, connected: false } : p))
+      );
+    } catch {
+      // Do not mark disconnected when request fails
+    }
   }, []);
 
-  const handleDisconnectPlatform = useCallback((platformId: string) => {
-    setPlatforms((prev) => prev.map((p) => (p.id === platformId ? { ...p, connected: false } : p)));
+  const handleDeleteAccount = useCallback(async () => {
+    try {
+      const res = await fetch('/api/trpc/user.deleteAccount', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ json: null }),
+      });
+      if (!res.ok) return;
+      setShowDeleteConfirm(false);
+      await signOut({ callbackUrl: '/login' });
+    } catch {
+      // Keep dialog open on failure
+    }
   }, []);
 
   return (
@@ -280,36 +421,30 @@ export default function SettingsPage() {
       </Card>
 
       {/* Delete Account Confirmation Modal */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="delete-account-dialog-title"
-            aria-describedby="delete-account-dialog-desc"
-            className="w-full max-w-md rounded-xl border border-[var(--dd-border)] bg-[var(--dd-bg-card)] p-6 shadow-lg"
-          >
-            <h2
-              id="delete-account-dialog-title"
-              className="text-lg font-semibold text-[var(--dd-text-primary)]"
-            >
-              Delete Account
-            </h2>
-            <p id="delete-account-dialog-desc" className="mt-2 text-sm text-[var(--dd-text-muted)]">
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby="delete-account-dialog-title"
+          aria-describedby="delete-account-dialog-desc"
+        >
+          <DialogHeader>
+            <DialogTitle id="delete-account-dialog-title">Delete Account</DialogTitle>
+            <DialogDescription id="delete-account-dialog-desc">
               Are you sure you want to permanently delete your account? This action cannot be
               undone.
-            </p>
-            <div className="mt-6 flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>
-                Cancel
-              </Button>
-              <Button variant="destructive" onClick={() => setShowDeleteConfirm(false)}>
-                Confirm Delete
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-4 gap-2">
+            <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={() => void handleDeleteAccount()}>
+              Confirm Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -205,7 +205,7 @@ export function DeliveryCard({
         data-testid="delivery-card"
         data-delivery-id={delivery.id}
         role="article"
-        tabIndex={0}
+        tabIndex={onClick ? 0 : undefined}
         className={cn(
           'cursor-pointer transition-all duration-200',
           'hover:shadow-md',
@@ -216,6 +216,17 @@ export function DeliveryCard({
           className
         )}
         onClick={onClick}
+        onKeyDown={
+          onClick
+            ? (e) => {
+                if (e.target !== e.currentTarget) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onClick();
+                }
+              }
+            : undefined
+        }
       >
         <CardContent className="p-4">
           {/* Header row: Platform badge + ETA */}

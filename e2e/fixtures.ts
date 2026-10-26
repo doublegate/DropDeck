@@ -188,6 +188,66 @@ export async function setupMockAPI(page: Page) {
     });
   });
 
+  await page.route('**/api/trpc/platform.getConnections**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        result: {
+          data: mockPlatformConfigs,
+        },
+      }),
+    });
+  });
+
+  await page.route('**/api/trpc/platform.initiateOAuth**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        result: {
+          data: { success: true },
+        },
+      }),
+    });
+  });
+
+  await page.route('**/api/trpc/platform.connect**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        result: {
+          data: { success: true },
+        },
+      }),
+    });
+  });
+
+  await page.route('**/api/trpc/platform.disconnect**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        result: {
+          data: { success: true },
+        },
+      }),
+    });
+  });
+
+  await page.route('**/api/trpc/preference.update**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        result: {
+          data: { success: true },
+        },
+      }),
+    });
+  });
+
   // Mock tRPC preferences endpoint
   await page.route('**/api/trpc/preference.get**', async (route) => {
     await route.fulfill({

@@ -51,6 +51,9 @@ export interface PlatformMetadata {
  * Notification settings
  */
 export interface NotificationSettings {
+  pushEnabled?: boolean;
+  inAppEnabled?: boolean;
+  soundEnabled?: boolean;
   driverAssigned: boolean;
   outForDelivery: boolean;
   arrivingSoon: boolean; // 5 minute warning

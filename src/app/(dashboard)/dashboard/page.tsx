@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Map as MapIcon, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useMemo } from 'react';
+import superjson from 'superjson';
 import { DeliveryFilters, DeliveryGrid, DeliveryStats } from '@/components/delivery';
 import { LiveTrackingMap } from '@/components/map';
 import { Button } from '@/components/ui/button';
@@ -143,11 +144,23 @@ export default function DashboardPage() {
       const res = await fetch('/api/trpc/delivery.getActive');
       if (!res.ok) return;
       const json = (await res.json()) as {
-        result?: { data?: Partial<UnifiedDelivery>[] };
+        result?: {
+          data?:
+            | Partial<UnifiedDelivery>[]
+            | { json: Partial<UnifiedDelivery>[]; meta?: Record<string, unknown> };
+        };
       };
-      const rawDeliveries = json?.result?.data;
+      const rawData = json?.result?.data;
+      const rawDeliveries = Array.isArray(rawData)
+        ? rawData
+        : rawData && typeof rawData === 'object' && 'json' in rawData
+          ? (superjson.deserialize(rawData as Parameters<typeof superjson.deserialize>[0]) as
+              | Partial<UnifiedDelivery>[]
+              | undefined)
+          : undefined;
       if (Array.isArray(rawDeliveries)) {
         const now = new Date();
+        const toDate = (val?: Date | string) => (val ? new Date(val) : undefined);
         const normalized: UnifiedDelivery[] = rawDeliveries.map((d, index) => ({
           id: d.id ?? `delivery-${index}`,
           platform: d.platform ?? 'doordash',
@@ -156,33 +169,58 @@ export default function DashboardPage() {
           statusLabel: d.statusLabel ?? 'Preparing',
           statusUpdatedAt: d.statusUpdatedAt ? new Date(d.statusUpdatedAt) : now,
           eta: {
+            ...d.eta,
             estimatedArrival: d.eta?.estimatedArrival
               ? new Date(d.eta.estimatedArrival)
               : new Date(now.getTime() + (d.eta?.minutesRemaining ?? 15) * 60000),
             minutesRemaining: d.eta?.minutesRemaining ?? 15,
             confidence: d.eta?.confidence ?? 'high',
           },
-          driver: d.driver,
+          driver: d.driver
+            ? {
+                ...d.driver,
+                location: d.driver.location
+                  ? {
+                      ...d.driver.location,
+                      timestamp: d.driver.location.timestamp
+                        ? new Date(d.driver.location.timestamp)
+                        : now,
+                    }
+                  : undefined,
+              }
+            : undefined,
           destination: {
+            ...d.destination,
             address: d.destination?.address ?? '123 Main St',
             lat: d.destination?.lat ?? 37.7749,
             lng: d.destination?.lng ?? -122.4194,
           },
           order: {
+            ...d.order,
             itemCount: d.order?.itemCount ?? 1,
-            totalAmount: d.order?.totalAmount,
-            items: d.order?.items,
           },
           tracking: {
+            ...d.tracking,
             mapAvailable: d.tracking?.mapAvailable ?? false,
             liveUpdates: d.tracking?.liveUpdates ?? false,
             contactDriverAvailable: d.tracking?.contactDriverAvailable ?? false,
           },
           timestamps: {
             ordered: d.timestamps?.ordered ? new Date(d.timestamps.ordered) : now,
+            confirmed: toDate(d.timestamps?.confirmed),
+            preparing: toDate(d.timestamps?.preparing),
+            readyForPickup: toDate(d.timestamps?.readyForPickup),
+            driverAssigned: toDate(d.timestamps?.driverAssigned),
+            pickedUp: toDate(d.timestamps?.pickedUp),
+            outForDelivery: toDate(d.timestamps?.outForDelivery),
+            arriving: toDate(d.timestamps?.arriving),
+            delivered: toDate(d.timestamps?.delivered),
+            cancelled: toDate(d.timestamps?.cancelled),
           },
           meta: {
+            ...d.meta,
             lastFetchedAt: d.meta?.lastFetchedAt ? new Date(d.meta.lastFetchedAt) : now,
+            nextFetchAt: toDate(d.meta?.nextFetchAt),
             fetchMethod: d.meta?.fetchMethod ?? 'api',
             adapterId: d.meta?.adapterId ?? d.platform ?? 'doordash',
           },

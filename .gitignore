@@ -144,4 +144,4 @@ public/mockServiceWorker.js
 !*.example.key
 
 # Next.js 16.4+ auto-generated agent rules
-AGENTS.md
+/AGENTS.md

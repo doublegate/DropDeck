@@ -97,8 +97,10 @@ test.describe('Authentication', () => {
       if (await userMenu.isVisible()) {
         await userMenu.click();
 
-        const signOutButton = page.getByRole('button', { name: /sign out/i });
-        await expect(signOutButton).toBeVisible();
+        const signOutButton = page
+          .getByRole('menuitem', { name: /sign out/i })
+          .or(page.getByRole('button', { name: /sign out/i }));
+        await expect(signOutButton.first()).toBeVisible();
       }
     });
   });

@@ -117,9 +117,9 @@ export function Header({ onMenuClick }: HeaderProps) {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Connected Platforms</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <div className="p-1">
+              <DropdownMenuItem asChild>
                 <SignOutButton className="w-full justify-start" />
-              </div>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )}
