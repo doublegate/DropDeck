@@ -189,7 +189,7 @@ jobs:
           args: --severity-threshold=high
 
       - name: Check for secrets
-        uses: trufflesecurity/trufflehog@v3.99.7
+        uses: trufflesecurity/trufflehog@v3.99.8
         continue-on-error: true
         with:
           version: v3.99.7
